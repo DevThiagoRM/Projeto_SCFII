@@ -97,7 +97,7 @@ namespace ProjetoAcoesSustentaveis.Infrastructure.Data.AppContext
 
                 entity.Property(c => c.Descricao)
                 .IsRequired()
-                .HasMaxLength(50);
+                .HasMaxLength(300);
 
                 entity.HasData(
                     new Genero { Id = 1, NomeGenero = "Masculino", Descricao = "Homem cisgênero"},
@@ -253,6 +253,16 @@ namespace ProjetoAcoesSustentaveis.Infrastructure.Data.AppContext
                 entity.HasOne(u => u.TipoUsuario)
                       .WithMany(t => t.Usuarios)
                       .HasForeignKey(u => u.TipoUsuarioId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(u => u.CriadoPor)
+                      .WithMany(u => u.UsuariosCriados)
+                      .HasForeignKey(u => u.CriadoPorId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(u => u.AtualizadoPor)
+                      .WithMany(u => u.UsuariosAtualizados)
+                      .HasForeignKey(u => u.AtualizadoPorId)
                       .OnDelete(DeleteBehavior.Restrict);
             });
 

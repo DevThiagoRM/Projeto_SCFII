@@ -188,7 +188,9 @@ namespace Projeto_SCFII.Controllers
             if (!response.Success || response.Data == null)
                 return BadRequest(response.Message);
 
-            return CreatedAtAction(nameof(GetById), new { id = response.Data.Id }, response);
+            //CreatedAtAction(nameof(GetById), new { id = response.Data.Id }, response);
+
+            return RedirectToAction("Index", "Usuario"); ;
         }
 
 

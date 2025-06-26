@@ -31,11 +31,14 @@
         public int TipoUsuarioId { get; set; }
 
         public Usuario? CriadoPor { get; set; }
-        public int CriadoPorId { get; set; }
+        public int? CriadoPorId { get; set; }
         public DateTime DataCriacao { get; set; }
 
+        public ICollection<Usuario> UsuariosCriados { get; set; } = new HashSet<Usuario>();
+        public ICollection<Usuario> UsuariosAtualizados { get; set; } = new HashSet<Usuario>();
+
         public Usuario? AtualizadoPor { get; set; }
-        public int AtualizadoPorId { get; set; }
+        public int? AtualizadoPorId { get; set; }
         public DateTime UltimaAtualizacao { get; set; }
 
         public DateTime DataAdmissao { get; set; }
