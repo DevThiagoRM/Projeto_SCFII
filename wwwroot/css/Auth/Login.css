@@ -13,10 +13,20 @@ html, body {
 }
 
 body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: radial-gradient(circle at center, var(--azul-maxi) 0%, var(--laranja-maxi) 0%, var(--branco-maxi) 100%);
-    min-height: 100vh;
-    margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.login-container {
+    min-height: 100vh;
+    padding: 0;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .card {
@@ -63,12 +73,5 @@ body {
     border-bottom-right-radius: 1rem;
 }
 
-.login-container {
-    min-height: 100vh;
-    padding: 0;
-    background: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 

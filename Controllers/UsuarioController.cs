@@ -90,6 +90,88 @@ namespace Projeto_SCFII.Controllers
             return View();
         }
 
+        [HttpGet("editar/{id}")]
+        public async Task<IActionResult> Editar(int id)
+        {
+            var response = await _usuarioService.GetUsuarioByIdAsync(id);
+
+            if (!response.Success || response.Data == null)
+                return NotFound();
+
+            var usuario = response.Data;
+
+            var dto = new UsuarioUpdateDTO
+            {
+                Nome = usuario.Nome!,
+                Sobrenome = usuario.Sobrenome!,
+                Email = usuario.Email!,
+                CargoId = usuario.CargoId,
+                DepartamentoId = usuario.DepartamentoId,
+                RacaId = usuario.RacaId,
+                GeneroId = usuario.GeneroId,
+                TipoUsuarioId = usuario.TipoUsuarioId,
+                StatusUsuarioId = usuario.StatusUsuarioId,
+                DataAdmissao = usuario.DataAdmissao
+            };
+
+            ViewBag.Cargos = new SelectList((await _cargoService.GetAllAsync()).Data, "Id", "NomeCargo");
+            ViewBag.Departamentos = new SelectList((await _departamentoService.GetAllAsync()).Data, "Id", "NomeDepartamento");
+            ViewBag.Racas = new SelectList((await _racaService.GetAllAsync()).Data, "Id", "NomeRaca");
+            ViewBag.Generos = new SelectList((await _generoService.GetAllAsync()).Data, "Id", "NomeGenero");
+            ViewBag.TiposUsuario = new SelectList((await _tipoUsuarioService.GetAllAsync()).Data, "Id", "TipoDeUsuario");
+            ViewBag.StatusUsuarios = new SelectList((await _statusUsuarioService.GetAllAsync()).Data, "Id", "Status");
+
+            return View("Update", dto);
+        }
+
+        [HttpGet("detalhes/{id}")]
+        public async Task<IActionResult> Details(int id)
+        {
+            var response = await _usuarioService.GetUsuarioByIdAsync(id);
+
+            if (!response.Success || response.Data == null)
+                return NotFound();
+
+            var usuario = response.Data;
+
+            var dto = new UsuarioUpdateDTO
+            {
+                Nome = usuario.Nome!,
+                Sobrenome = usuario.Sobrenome!,
+                Email = usuario.Email!,
+                CargoId = usuario.CargoId,
+                DepartamentoId = usuario.DepartamentoId,
+                RacaId = usuario.RacaId,
+                GeneroId = usuario.GeneroId,
+                TipoUsuarioId = usuario.TipoUsuarioId,
+                StatusUsuarioId = usuario.StatusUsuarioId,
+                DataAdmissao = usuario.DataAdmissao
+            };
+
+            ViewBag.Cargos = new SelectList((await _cargoService.GetAllAsync()).Data, "Id", "NomeCargo", usuario.CargoId);
+            ViewBag.Departamentos = new SelectList((await _departamentoService.GetAllAsync()).Data, "Id", "NomeDepartamento", usuario.DepartamentoId);
+            ViewBag.Racas = new SelectList((await _racaService.GetAllAsync()).Data, "Id", "NomeRaca", usuario.RacaId);
+            ViewBag.Generos = new SelectList((await _generoService.GetAllAsync()).Data, "Id", "NomeGenero", usuario.GeneroId);
+            ViewBag.TiposUsuario = new SelectList((await _tipoUsuarioService.GetAllAsync()).Data, "Id", "TipoDeUsuario", usuario.TipoUsuarioId);
+            ViewBag.StatusUsuarios = new SelectList((await _statusUsuarioService.GetAllAsync()).Data, "Id", "Status", usuario.StatusUsuarioId);
+
+            return View("Details", dto);
+        }
+
+        [HttpGet("dashboard")]
+        public async Task<IActionResult> Dashboard()
+        {
+            var response = await _usuarioService.GetDashboardDataAsync();
+            if (!response.Success)
+            {
+                // Você pode tratar o erro de forma mais elegante
+                return View(new DashboardDTO());
+            }
+
+            return View(response.Data);
+        }
+
+
         private async Task PopularDropdownDeCargos()
         {
             var response = await _cargoService.GetAllAsync();
@@ -190,7 +272,7 @@ namespace Projeto_SCFII.Controllers
 
             //CreatedAtAction(nameof(GetById), new { id = response.Data.Id }, response);
 
-            return RedirectToAction("Index", "Usuario"); ;
+            return RedirectToAction("Index", "Usuario");
         }
 
 
@@ -207,14 +289,15 @@ namespace Projeto_SCFII.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("{id:int}")]
+        [HttpPost("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             var response = await _usuarioService.DeleteUsuarioAsync(id);
             if (!response.Success)
                 return NotFound(response.Message);
+            Ok(response);
 
-            return Ok(response);
+            return RedirectToAction("Index", "Usuario");
         }
     }
 }

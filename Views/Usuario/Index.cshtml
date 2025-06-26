@@ -2,83 +2,90 @@
 
 @{
     ViewData["Title"] = "Usuários";
-    Layout = null; // sem layout para simplificar
 }
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@ViewData["Title"] - Projeto_SCFII</title>
+<div class="container-fluid">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
-        <link href="~/css/Usuario/Index.css;" rel="stylesheet" />
-</head>
-<body>
+    <div class="card">
 
-    <div class="container">
-        <div class="card mx-auto" style="max-width: 1000px;">
-            <div class="card-header">
-                Lista de Usuários
-            </div>
-
-            <div class="card-body">
-
-                <div class="d-flex justify-content-end mb-4">
-                    <a href="@Url.Action("Create", "Usuario")" class="btn btn-primary btn-lg">
-                        + Novo Usuário
-                    </a>
-                </div>
-
-                @if (Model != null && Model.Any())
-                {
-                    <table class="table table-hover align-middle">
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Email</th>
-                                <th class="text-center">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var usuario in Model)
-                            {
-                                <tr>
-                                    <td>@($"{usuario.Nome} {usuario.Sobrenome}")</td>
-                                    <td>@usuario.Email</td>
-                                    <td class="text-center actions">
-                                        <a href="@Url.Action("Details", "Usuario", new { id = usuario.Id })" class="btn btn-sm btn-info" title="Detalhes">Detalhes</a>
-                                        <a href="@Url.Action("Edit", "Usuario", new { id = usuario.Id })" class="btn btn-sm btn-warning" title="Editar">Editar</a>
-                                        <form asp-action="Delete" asp-controller="Usuario" asp-route-id="@usuario.Id" method="post" class="d-inline" onsubmit="return confirm('Confirma exclusão deste usuário?');">
-                                            <button type="submit" class="btn btn-sm btn-danger" title="Excluir">Excluir</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                }
-                else
-                {
-                    <div class="alert alert-info text-center mb-0">
-                        Nenhum usuário cadastrado.
-                    </div>
-                }
-            </div>
+        <div class="card-header">
+            Lista de Usuários
         </div>
-        <footer>
-            © 2025 Projeto_SCFII | Todos os direitos reservados
-        </footer>
+
+        <div class="card-body">
+
+            <div class="d-flex justify-content-start mb-4">
+                <a href="@Url.Action("Create", "Usuario")" class="btn btn-primary btn">
+                    Novo Usuário
+                </a>
+            </div>
+
+            @if (Model != null && Model.Any())
+            {
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Nome Completo</th>
+                            <th>Email</th>
+                            <th>Cargo</th>
+                            <th>Departamento</th>
+                            <th>Raça</th>
+                            <th>Gênero</th>
+                            <th>Status Usuário</th>
+                            <th>Tipo Usuário</th>
+                            <th>Data Criacao</th>
+
+                            <th class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var usuario in Model)
+                        {
+                            <tr>
+                                <td>@($"{usuario.NomeCompleto}")</td>
+                                <td>@usuario.Email</td>
+                                <td>@usuario.NomeCargo</td>
+                                <td>@usuario.NomeDepartamento</td>
+                                <td>@usuario.NomeRaca</td>
+                                <td>@usuario.NomeGenero</td>
+                                <td>@usuario.NomeStatusUsuario</td>
+                                <td>@usuario.NomeTipoUsuario</td>
+                                <td>@usuario.DataCriacao</td>
+
+                                <td class="text-center actions">
+                                    <a href="@Url.Action("Details", "Usuario", new { id = usuario.Id })"
+                                       class="btn btn-sm btn-info"
+                                       data-bs-toggle="tooltip"
+                                       title="Detalhes">
+                                        <i class="bi bi-clipboard-data"></i>
+                                    </a>
+
+                                    <a href="@Url.Action("Editar", "Usuario", new { id = usuario.Id })"
+                                       class="btn btn-sm btn-warning"
+                                       data-bs-toggle="tooltip"
+                                       title="Editar">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+
+                                    <form asp-action="Delete" asp-controller="Usuario" asp-route-id="@usuario.Id" method="post"
+                                          class="d-inline"
+                                          data-bs-toggle="tooltip"
+                                          title="Excluir"
+                                          onsubmit="return confirm('Confirma exclusão deste usuário?');">
+                                        <button type="submit" class="btn btn-sm btn-danger" title="Excluir"><i class="bi bi-trash"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-info text-center mb-0">
+                    Nenhum usuário cadastrado.
+                </div>
+            }
+        </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
-            integrity="sha256-3gJwYp7mDNKlfG/eSrtzNU3fJ2J2k5pOCb+qyjN7/tE="
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
-            crossorigin="anonymous"></script>
-
-</body>
-</html>
+</div>

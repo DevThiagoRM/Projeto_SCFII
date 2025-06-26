@@ -1,4 +1,6 @@
-﻿using Projeto_SCFII.Infrastructure.Application.Constructors.Repositories;
+﻿using Azure;
+using Microsoft.EntityFrameworkCore;
+using Projeto_SCFII.Infrastructure.Application.Constructors.Repositories;
 using Projeto_SCFII.Infrastructure.Application.Constructors.Services;
 using Projeto_SCFII.Infrastructure.Application.DTO.Shared;
 using Projeto_SCFII.Infrastructure.Application.DTO.Usuario;
@@ -217,6 +219,11 @@ namespace Projeto_SCFII.Infrastructure.Data.Services
                 _logger.LogError(ex, "Erro ao validar login");
                 return ResponseDTO<UsuarioDTO?>.CreateError("Erro interno ao validar login.");
             }
+        }
+
+        public async Task<ResponseDTO<DashboardDTO>> ObterDadosDashboardAsync()
+        {
+            return await _usuarioRepository.GetDashboardDataAsync();
         }
 
 

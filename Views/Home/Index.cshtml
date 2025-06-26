@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Bem-vindo";
+}
+
+<link href="~/css/Home/Index.css" rel="stylesheet" />
+
+<div class="container container-home ">
+    <div class="text-center mb-5">
+        <h2 class="display-4 fw-bold">Sistema de Cadastro de Funcionários com Indicador de Inclusão</h2>
+        <p class="lead">Monitoramento de Diversidade e Inclusão nas Empresas</p>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow-lg mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">💡 Resumo da Ideia</h3>
+                    <p>
+                        Este sistema tem como objetivo realizar o cadastro completo de funcionários, com campos que permitem o
+                        monitoramento da diversidade dentro da organização, como <strong>gênero</strong>, <strong>raça/cor</strong>
+                        e <strong>deficiência</strong>. Essas informações apoiam ações mais inclusivas e alinhadas à
+                        <strong>ODS 10 – Redução das Desigualdades</strong>.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card shadow-lg mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">🧩 Funcionalidades</h3>
+                    <ul>
+                        <li>Cadastro de Funcionários com dados pessoais e indicadores sociais</li>
+                        <li>Filtros por departamento, gênero, PCD e raça/cor</li>
+                        <li>Edição e exclusão de registros</li>
+                        <li>Indicadores visuais</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card shadow-lg mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">⚙️ Stack Utilizada</h3>
+                    <p>
+                        <strong>Backend:</strong> ASP.NET Core MVC com RazorPages <br />
+                        <strong>Frontend:</strong> HTML + Bootstrap 5 <br />
+                        <strong>Banco de Dados:</strong> SQL Server LocalDB
+                    </p>
+                </div>
+            </div>
+
+            <div class="card shadow-lg mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">🧠 Justificativa</h3>
+                    <p>
+                        Alinhado à <strong>ODS 10</strong>, este projeto visa promover um ambiente de trabalho mais justo e representativo,
+                        apoiando a tomada de decisões baseadas em dados sobre diversidade. Isso incentiva a equidade e inclusão nas organizações.
+                    </p>
+                </div>
+            </div>
+
+            <div class="text-center mt-5">
+                <a asp-controller="Auth" asp-action="Index" class="btn btn-primary btn-lg">Começar Cadastro de Funcionários</a>
+            </div>
+        </div>
+    </div>
+</div>

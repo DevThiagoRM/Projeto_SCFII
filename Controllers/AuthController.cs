@@ -32,7 +32,7 @@ namespace Projeto_SCFII.Controllers
                 ModelState.AddModelError(string.Empty, "Usuário ou senha inválidos.");
                 return View(model);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Usuario");
         }
 
 

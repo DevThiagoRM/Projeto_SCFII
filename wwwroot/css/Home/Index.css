@@ -1,0 +1,8 @@
+﻿.container-home {
+    zoom: 0.85;
+}
+
+header, footer {
+    display: none;
+    visibility: hidden
+}

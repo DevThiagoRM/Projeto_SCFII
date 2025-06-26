@@ -1,4 +1,5 @@
-﻿using Projeto_SCFII.Infrastructure.Application.DTO.Shared;
+﻿using Azure;
+using Projeto_SCFII.Infrastructure.Application.DTO.Shared;
 using Projeto_SCFII.Infrastructure.Application.DTO.Usuario;
 using Projeto_SCFII.Infrastructure.Application.Filters;
 
@@ -8,6 +9,7 @@ namespace Projeto_SCFII.Infrastructure.Application.Constructors.Services
     {
         Task<ResponseDTO<IEnumerable<UsuarioDTO>>> GetAllUsuariosAsync();
         Task<ResponseDTO<IEnumerable<UsuarioDTO>>> GetUsuariosByFiltroAsync(UsuarioFiltro filtro);
+        Task<ResponseDTO<DashboardDTO>> ObterDadosDashboardAsync();
 
         Task<ResponseDTO<UsuarioDTO?>> GetUsuarioByIdAsync(int id);
         Task<ResponseDTO<UsuarioDTO?>> GetUsuarioByEmailAsync(string email);

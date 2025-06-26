@@ -1,0 +1,100 @@
+﻿@model Projeto_SCFII.Infrastructure.Application.DTO.Usuario.UsuarioUpdateDTO
+
+@{
+    ViewData["Title"] = "Dados Usuário";
+}
+
+<div class="card card-details">
+    <div class="card-header">
+        Dados do Usuário
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-6">
+                <div class="mb-3">
+                    <label asp-for="Nome" class="form-label">Nome</label>
+                    <input asp-for="Nome" class="form-control" disabled="disabled" readonly />
+                    <span asp-validation-for="Nome" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="mb-3">
+                    <label asp-for="Sobrenome" class="form-label">Sobrenome</label>
+                    <input asp-for="Sobrenome" class="form-control" disabled="disabled" readonly />
+                    <span asp-validation-for="Sobrenome" class="text-danger small"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label">E-mail</label>
+                    <input asp-for="Email" class="form-control" disabled="disabled" readonly />
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-6">
+                <div class="mb-4">
+                    <label asp-for="CargoId" class="form-label">Cargo</label>
+                    <select asp-for="CargoId" asp-items="ViewBag.Cargos" class="form-control" disabled="disabled" readonly></select>
+                    <span asp-validation-for="CargoId" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="mb-4">
+                    <label asp-for="DepartamentoId" class="form-label">Departamento</label>
+                    <select asp-for="DepartamentoId" asp-items="ViewBag.Departamentos" class="form-control" disabled="disabled" readonly></select>
+                    <span asp-validation-for="DepartamentoId" class="text-danger small"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="mb-4">
+                    <label asp-for="RacaId" class="form-label">Raça</label>
+                    <select asp-for="RacaId" asp-items="ViewBag.Racas" class="form-control" disabled="disabled" readonly></select>
+                    <span asp-validation-for="RacaId" class="text-danger small"></span>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="mb-4">
+                    <label asp-for="GeneroId" class="form-label">Gênero</label>
+                    <select asp-for="GeneroId" asp-items="ViewBag.Generos" class="form-control" disabled="disabled" readonly></select>
+                    <span asp-validation-for="GeneroId" class="text-danger small"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="TipoUsuarioId" class="form-label">Tipo Usuário</label>
+            <select asp-for="TipoUsuarioId" asp-items="ViewBag.TiposUsuario" class="form-control" disabled="disabled" readonly></select>
+            <span asp-validation-for="TipoUsuarioId" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="StatusUsuarioId" class="form-label">Status</label>
+            <select asp-for="StatusUsuarioId" asp-items="ViewBag.StatusUsuarios" class="form-control" disabled="disabled" readonly></select>
+            <span asp-validation-for="StatusUsuarioId" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="DataAdmissao" class="form-label"></label>
+            <input asp-for="DataAdmissao" type="datetime-local" class="form-control" disabled="disabled" readonly />
+            <span asp-validation-for="DataAdmissao" class="text-danger small"></span>
+        </div>
+    </div>
+
+    <div class="card-footer">
+        <a href="@Url.Action("Index", "Usuario")" class="btn btn-outline-secondary">Voltar</a>
+    </div>
+</div>

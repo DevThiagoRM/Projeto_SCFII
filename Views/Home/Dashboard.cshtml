@@ -1,0 +1,167 @@
+﻿@model Projeto_SCFII.Infrastructure.Application.DTO.Usuario.DashboardDTO
+
+@{
+    ViewData["Title"] = "Dashboard de Diversidade";
+}
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-4">Dashboard de Diversidade</h1>
+            <p class="lead">Total de funcionários: @Model.TotalUsuarios</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Gráfico por Raça -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Distribuição por Raça/Cor</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="racaChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráfico por Gênero -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Distribuição por Gênero</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="generoChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Tabela com dados por Raça -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Dados por Raça/Cor</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Raça/Cor</th>
+                                    <th>Quantidade</th>
+                                    <th>Percentual</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.PorRaca)
+                                {
+                                    <tr>
+                                        <td>@item.Nome</td>
+                                        <td>@item.Quantidade</td>
+                                        <td>@item.Percentual.ToString("N1")%</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabela com dados por Gênero -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Dados por Gênero</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Gênero</th>
+                                    <th>Quantidade</th>
+                                    <th>Percentual</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.PorGenero)
+                                {
+                                    <tr>
+                                        <td>@item.Nome</td>
+                                        <td>@item.Quantidade</td>
+                                        <td>@item.Percentual.ToString("N1")%</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Dados para os gráficos
+        const racaData = {
+            labels: @Html.Raw(Json.Serialize(Model.PorRaca.Select(r => r.Nome))),
+            datasets: [{
+                data: @Html.Raw(Json.Serialize(Model.PorRaca.Select(r => r.Percentual))),
+                backgroundColor: [
+                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
+                    '#FF9F40', '#8AC24A', '#607D8B', '#E91E63', '#9C27B0'
+                ]
+            }]
+        };
+
+        const generoData = {
+            labels: @Html.Raw(Json.Serialize(Model.PorGenero.Select(g => g.Nome))),
+            datasets: [{
+                data: @Html.Raw(Json.Serialize(Model.PorGenero.Select(g => g.Percentual))),
+                backgroundColor: [
+                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
+                    '#FF9F40', '#8AC24A', '#607D8B', '#E91E63', '#9C27B0'
+                ]
+            }]
+        };
+
+        // Configurações comuns
+        const chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.label}: ${context.raw.toFixed(1)}%`;
+                        }
+                    }
+                }
+            }
+        };
+
+        // Inicializar gráficos
+        document.addEventListener('DOMContentLoaded', function() {
+            new Chart(document.getElementById('racaChart'), {
+                type: 'pie',
+                data: racaData,
+                options: chartOptions
+            });
+
+            new Chart(document.getElementById('generoChart'), {
+                type: 'pie',
+                data: generoData,
+                options: chartOptions
+            });
+        });
+    </script>
+}

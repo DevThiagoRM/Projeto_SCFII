@@ -1,4 +1,6 @@
-﻿using Projeto_SCFII.Infrastructure.Application.Filters;
+﻿using Projeto_SCFII.Infrastructure.Application.DTO.Shared;
+using Projeto_SCFII.Infrastructure.Application.DTO.Usuario;
+using Projeto_SCFII.Infrastructure.Application.Filters;
 using ProjetoAcoesSustentaveis.Infrastructure.Domain.Entities;
 
 namespace Projeto_SCFII.Infrastructure.Application.Constructors.Repositories
@@ -11,6 +13,7 @@ namespace Projeto_SCFII.Infrastructure.Application.Constructors.Repositories
         Task<Usuario?> GetUsuarioByIdAsync(int id);
         Task<Usuario?> GetUsuarioByEmailAsync(string email);
         Task<Usuario?> GetUsuarioCompletoPorEmailAsync(string email);
+        Task<ResponseDTO<DashboardDTO>> GetDashboardDataAsync();
 
 
         Task<Usuario> CreateUsuarioAsync(Usuario usuario);
