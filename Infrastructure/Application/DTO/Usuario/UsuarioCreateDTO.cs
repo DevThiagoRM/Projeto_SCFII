@@ -6,6 +6,7 @@
         public string Sobrenome { get; set; } = null!;
         public string Email { get; set; } = null!;
         public string Senha { get; set; } = null!;
+        public string ConfirmarSenha { get; set; } = null!;
 
         public int CargoId { get; set; }
         public int DepartamentoId { get; set; }

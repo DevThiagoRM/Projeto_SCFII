@@ -17,11 +17,22 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Repositories
 
+builder.Services.AddScoped<ICargoRepository, CargoRepository>();
+builder.Services.AddScoped<IDepartamentoRepository, DepartamentoRepository>();
+builder.Services.AddScoped<IGeneroRepository, GeneroRepository>();
+builder.Services.AddScoped<IRacaRepository, RacaRepository>();
+builder.Services.AddScoped<IStatusUsuarioRepository, StatusUsuarioRepository>();
+builder.Services.AddScoped<ITipoUsuarioRepository, TipoUsuarioRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-
 
 // Services
 
+builder.Services.AddScoped<ICargoService, CargoService>();
+builder.Services.AddScoped<IDepartamentoService, DepartamentoService>();
+builder.Services.AddScoped<IGeneroService, GeneroService>();
+builder.Services.AddScoped<IRacaService, RacaService>();
+builder.Services.AddScoped<IStatusUsuarioService, StatusUsuarioService>();
+builder.Services.AddScoped<ITipoUsuarioService, TipoUsuarioService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
 var app = builder.Build();

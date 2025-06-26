@@ -1,17 +1,39 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Projeto_SCFII.Infrastructure.Application.Constructors.Services;
 using Projeto_SCFII.Infrastructure.Application.DTO.Usuario;
 using Projeto_SCFII.Infrastructure.Application.Filters;
+using Projeto_SCFII.Infrastructure.Data.Services;
+using ProjetoAcoesSustentaveis.Infrastructure.Domain.Entities;
 
 namespace Projeto_SCFII.Controllers
 {
     public class UsuarioController : Controller
     {
         private readonly IUsuarioService _usuarioService;
+        private readonly ICargoService _cargoService;
+        private readonly IDepartamentoService _departamentoService;
+        private readonly IGeneroService _generoService;
+        private readonly IRacaService _racaService;
+        private readonly IStatusUsuarioService _statusUsuarioService;
+        private readonly ITipoUsuarioService _tipoUsuarioService;
 
-        public UsuarioController(IUsuarioService usuarioService)
+        public UsuarioController(
+            IUsuarioService usuarioService,
+            ICargoService cargoService,
+            IDepartamentoService departamentoService,
+            IGeneroService generoService,
+            IRacaService racaService,
+            IStatusUsuarioService statusUsuarioService,
+            ITipoUsuarioService tipoUsuarioService)
         {
             _usuarioService = usuarioService;
+            _cargoService = cargoService;
+            _departamentoService = departamentoService;
+            _generoService = generoService;
+            _racaService = racaService;
+            _statusUsuarioService = statusUsuarioService;
+            _tipoUsuarioService = tipoUsuarioService;
         }
 
         public async Task<IActionResult> Index()
@@ -57,11 +79,94 @@ namespace Projeto_SCFII.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            await PopularDropdownDeCargos();
+            await PopularDropdownDeDepartamentos();
+            await PopularDropdownDeGeneros();
+            await PopularDropdownDeRacas();
+            await PopularDropdownDeStatusUsuario();
+            await PopularDropdownDeTipoUsuario();
             return View();
         }
 
+        private async Task PopularDropdownDeCargos()
+        {
+            var response = await _cargoService.GetAllAsync();
+            if (response.Success)
+            {
+                ViewBag.Cargos = new SelectList(response.Data, "Id", "NomeCargo");
+            }
+            else
+            {
+                ViewBag.Cargos = new SelectList(Enumerable.Empty<Cargo>(), "Id", "NomeCargo");
+            }
+        }
+
+        private async Task PopularDropdownDeDepartamentos()
+        {
+            var response = await _departamentoService.GetAllAsync();
+            if (response.Success)
+            {
+                ViewBag.Departamentos = new SelectList(response.Data, "Id", "NomeDepartamento");
+            }
+            else
+            {
+                ViewBag.Departamentos = new SelectList(Enumerable.Empty<Cargo>(), "Id", "NomeDepartamento");
+            }
+        }
+
+        private async Task PopularDropdownDeGeneros()
+        {
+            var response = await _generoService.GetAllAsync();
+            if (response.Success)
+            {
+                ViewBag.Generos = new SelectList(response.Data, "Id", "NomeGenero");
+            }
+            else
+            {
+                ViewBag.Generos = new SelectList(Enumerable.Empty<Cargo>(), "Id", "NomeGenero");
+            }
+        }
+
+        private async Task PopularDropdownDeRacas()
+        {
+            var response = await _racaService.GetAllAsync();
+            if (response.Success)
+            {
+                ViewBag.Racas = new SelectList(response.Data, "Id", "NomeRaca");
+            }
+            else
+            {
+                ViewBag.Racas = new SelectList(Enumerable.Empty<Cargo>(), "Id", "NomeRaca");
+            }
+        }
+
+        private async Task PopularDropdownDeStatusUsuario()
+        {
+            var response = await _statusUsuarioService.GetAllAsync();
+            if (response.Success)
+            {
+                ViewBag.StatusUsuarios = new SelectList(response.Data, "Id", "Status");
+            }
+            else
+            {
+                ViewBag.StatusUsuarios = new SelectList(Enumerable.Empty<Cargo>(), "Id", "Status");
+            }
+        }
+
+        private async Task PopularDropdownDeTipoUsuario()
+        {
+            var response = await _tipoUsuarioService.GetAllAsync();
+            if (response.Success)
+            {
+                ViewBag.TiposUsuario = new SelectList(response.Data, "Id", "TipoDeUsuario");
+            }
+            else
+            {
+                ViewBag.TiposUsuario = new SelectList(Enumerable.Empty<Cargo>(), "Id", "TipoDeUsuario");
+            }
+        }
 
         [HttpPost("filtro")]
         public async Task<IActionResult> GetByFiltro([FromBody] UsuarioFiltro filtro)
@@ -74,7 +179,7 @@ namespace Projeto_SCFII.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] UsuarioCreateDTO usuarioCreateDto)
+        public async Task<IActionResult> Create(UsuarioCreateDTO usuarioCreateDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
