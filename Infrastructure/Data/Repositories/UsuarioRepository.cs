@@ -83,9 +83,6 @@ namespace Projeto_SCFII.Infrastructure.Data.Repositories
             if (filtro.GeneroId.HasValue)
                 query = query.Where(u => u.GeneroId == filtro.GeneroId.Value);
 
-            if (filtro.DataAdmissao.HasValue)
-                query = query.Where(u => u.DataAdmissao.Date == filtro.DataAdmissao.Value.Date);
-
             if (filtro.Deleted.HasValue)
                 query = query.Where(u => u.Deleted == filtro.Deleted.Value);
 

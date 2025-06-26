@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Projeto_SCFII.Infrastructure.Domain.Entities;
 using ProjetoAcoesSustentaveis.Infrastructure.Domain.Entities;
 
 namespace ProjetoAcoesSustentaveis.Infrastructure.Data.AppContext
@@ -15,16 +13,13 @@ namespace ProjetoAcoesSustentaveis.Infrastructure.Data.AppContext
         public DbSet<Departamento> Departamentos { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<TipoEndereco> TiposEndereco { get; set; }
-        public DbSet<UsuarioEndereco> UsuariosEnderecos { get; set; }
         public DbSet<Telefone> Telefones { get; set; }
         public DbSet<TipoTelefone> TiposTelefone { get; set; }
-        public DbSet<UsuarioTelefone> UsuariosTelefones { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<TipoUsuario> TiposUsuario { get; set; }
         public DbSet<StatusUsuario> StatusUsuarios { get; set; }
         public DbSet<Genero> Generos { get; set; }
         public DbSet<Raca> Racas { get; set; }
-        public DbSet<Deficiencia> Deficiencia { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -56,38 +51,12 @@ namespace ProjetoAcoesSustentaveis.Infrastructure.Data.AppContext
                 );
             });
 
-            modelBuilder.Entity<Endereco>(entity =>
-            {
-                entity.ToTable("Enderecos");
-                entity.HasKey(c => c.Id);
-                entity.HasOne(c => c.TipoEndereco)
-                      .WithMany(t => t.Enderecos)
-                      .HasForeignKey(c => c.TipoEnderecoId)
-                      .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Endereco>()
+                .HasOne(e => e.Usuario)
+                .WithOne(u => u.Endereco)
+                .HasForeignKey<Endereco>(e => e.UsuarioId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-                entity.Property(c => c.Logradouro)
-                .IsRequired()
-                .HasMaxLength(50);
-
-                entity.Property(c => c.Bairro)
-                .IsRequired()
-                .HasMaxLength(50);
-
-                entity.Property(c => c.Cidade)
-                .IsRequired()
-                .HasMaxLength(50);
-
-                entity.Property(c => c.UF)
-                .IsRequired()
-                .HasMaxLength(2);
-
-                entity.Property(c => c.TipoEnderecoId)
-                .IsRequired();
-
-                entity.Property(c => c.Referencia)
-                .IsRequired()
-                .HasMaxLength(100);
-            });
 
             modelBuilder.Entity<Genero>(entity =>
             {
@@ -132,37 +101,6 @@ namespace ProjetoAcoesSustentaveis.Infrastructure.Data.AppContext
                 );
             });
 
-            modelBuilder.Entity<Deficiencia>(entity =>
-            {
-                entity.ToTable("Deficiencias");
-
-                entity.HasKey(c => c.Id);
-
-                entity.Property(c => c.CID)
-                      .IsRequired()
-                      .HasMaxLength(50);
-
-                entity.Property(c => c.Descricao)
-                      .IsRequired()
-                      .HasMaxLength(255);
-
-                entity.HasData(
-                    new Deficiencia { Id = 1, CID = "Z89.4", Descricao = "Deficiência Física – Amputação" },
-                    new Deficiencia { Id = 2, CID = "G82.1", Descricao = "Deficiência Física – Paralisia" },
-                    new Deficiencia { Id = 3, CID = "H90.3", Descricao = "Deficiência Auditiva" },
-                    new Deficiencia { Id = 4, CID = "H54.0", Descricao = "Deficiência Visual – Cegueira" },
-                    new Deficiencia { Id = 5, CID = "H54.2", Descricao = "Deficiência Visual – Baixa Visão" },
-                    new Deficiencia { Id = 6, CID = "F70", Descricao = "Deficiência Intelectual Leve" },
-                    new Deficiencia { Id = 7, CID = "F71", Descricao = "Deficiência Intelectual Moderada" },
-                    new Deficiencia { Id = 8, CID = "F72", Descricao = "Deficiência Intelectual Grave" },
-                    new Deficiencia { Id = 9, CID = "F78", Descricao = "Deficiência Múltipla" },
-                    new Deficiencia { Id = 10, CID = "F84.0", Descricao = "Transtorno do Espectro Autista" },
-                    new Deficiencia { Id = 11, CID = "F31.3", Descricao = "Deficiência Psíquica" },
-                    new Deficiencia { Id = 12, CID = "Q90.9", Descricao = "Síndrome de Down" }
-                );
-            });
-
-
             modelBuilder.Entity<StatusUsuario>(entity =>
             {
                 entity.ToTable("StatusUsuario");
@@ -178,18 +116,12 @@ namespace ProjetoAcoesSustentaveis.Infrastructure.Data.AppContext
                 );
             });
 
-            modelBuilder.Entity<Telefone>(entity =>
-            {
-                entity.ToTable("Telefones");
-                entity.HasKey(c => c.Id);
+            modelBuilder.Entity<Telefone>()
+                .HasOne(t => t.Usuario)
+                .WithOne(u => u.Telefone)
+                .HasForeignKey<Telefone>(t => t.UsuarioId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-                entity.Property(c => c.NumeroTelefone)
-                .IsRequired()
-                .HasMaxLength(50);
-
-                entity.Property(c => c.TipoTelefoneId)
-                .IsRequired();
-            });
 
             modelBuilder.Entity<TipoEndereco>(entity =>
             {
@@ -250,9 +182,6 @@ namespace ProjetoAcoesSustentaveis.Infrastructure.Data.AppContext
                 entity.Property(c => c.DataCriacao)
                       .IsRequired();
 
-                entity.Property(c => c.DataAdmissao)
-                      .IsRequired();
-
                 entity.Property(c => c.Deleted)
                       .IsRequired();
 
@@ -287,63 +216,7 @@ namespace ProjetoAcoesSustentaveis.Infrastructure.Data.AppContext
                       .WithMany(t => t.Usuarios)
                       .HasForeignKey(u => u.TipoUsuarioId)
                       .OnDelete(DeleteBehavior.Restrict);
-
-                entity.HasOne(u => u.CriadoPor)
-                      .WithMany(u => u.UsuariosCriados)
-                      .HasForeignKey(u => u.CriadoPorId)
-                      .OnDelete(DeleteBehavior.Restrict);
-
-                entity.HasOne(u => u.AtualizadoPor)
-                      .WithMany(u => u.UsuariosAtualizados)
-                      .HasForeignKey(u => u.AtualizadoPorId)
-                      .OnDelete(DeleteBehavior.Restrict);
             });
-
-
-            // Entidades Associativas
-
-            modelBuilder.Entity<UsuarioEndereco>(entity =>
-            {
-                entity.ToTable("UsuariosEnderecos");
-                entity.HasKey(ue => new { ue.UsuarioId, ue.EnderecoId }); // Chave composta
-
-                entity.HasOne(ue => ue.Usuario)
-                    .WithMany(u => u.UsuarioEndereco)
-                    .HasForeignKey(ue => ue.UsuarioId);
-
-                entity.HasOne(ue => ue.Endereco)
-                    .WithMany(e => e.UsuarioEndereco)
-                    .HasForeignKey(ue => ue.EnderecoId);
-            });
-
-            modelBuilder.Entity<UsuarioTelefone>(entity =>
-            {
-                entity.ToTable("UsuariosTelefones");
-                entity.HasKey(ue => new { ue.UsuarioId, ue.TelefoneId }); // Chave composta
-
-                entity.HasOne(ue => ue.Usuario)
-                    .WithMany(u => u.UsuarioTelefone)
-                    .HasForeignKey(ue => ue.UsuarioId);
-
-                entity.HasOne(ue => ue.Telefone)
-                    .WithMany(e => e.UsuarioTelefone)
-                    .HasForeignKey(ue => ue.TelefoneId);
-            });
-
-            modelBuilder.Entity<UsuarioDeficiencia>(entity =>
-            {
-                entity.HasKey(e => new { e.UsuarioId, e.DeficienciaId });
-
-                entity.HasOne(e => e.Usuario)
-                      .WithMany(u => u.UsuarioDeficiencia)
-                      .HasForeignKey(e => e.UsuarioId);
-
-                entity.HasOne(e => e.Deficiencia)
-                      .WithMany(d => d.UsuarioDeficiencia)
-                      .HasForeignKey(e => e.DeficienciaId);
-            });
-
-
             base.OnModelCreating(modelBuilder);
 
         }

@@ -1,4 +1,5 @@
-﻿using Projeto_SCFII.Infrastructure.Domain.Entities;
+﻿using Projeto_SCFII.Infrastructure.Application.DTO.Endereco;
+using Projeto_SCFII.Infrastructure.Application.DTO.Telefone;
 using ProjetoAcoesSustentaveis.Infrastructure.Domain.Entities;
 
 namespace Projeto_SCFII.Infrastructure.Application.DTO.Usuario
@@ -21,7 +22,7 @@ namespace Projeto_SCFII.Infrastructure.Application.DTO.Usuario
         public string? NomeRaca { get; set; }
 
         public bool PossuiDeficiencia { get; set; }
-        public ICollection<UsuarioDeficiencia>? UsuarioDeficiencia { get; set; } = new HashSet<UsuarioDeficiencia>();
+        public string? CID { get; set; }
 
         public int GeneroId { get; set; }
         public string? NomeGenero { get; set; }
@@ -32,13 +33,11 @@ namespace Projeto_SCFII.Infrastructure.Application.DTO.Usuario
         public int TipoUsuarioId { get; set; }
         public string? NomeTipoUsuario { get; set; }
 
-        public ICollection<UsuarioEndereco>? UsuarioEndereco { get; set; } = new HashSet<UsuarioEndereco>();
-        public ICollection<UsuarioTelefone>? UsuarioTelefone { get; set; } = new HashSet<UsuarioTelefone>();
+        public EnderecoDTO? Endereco { get; set; }
+        public TelefoneDTO? Telefone { get; set; }
 
         public DateTime DataCriacao { get; set; }
         public DateTime UltimaAtualizacao { get; set; }
-        public DateTime DataAdmissao { get; set; }
-        public DateTime? DataDemissao { get; set; }
         public bool Deleted { get; set; }
     }
 }

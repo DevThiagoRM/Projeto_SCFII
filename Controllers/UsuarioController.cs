@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Projeto_SCFII.Infrastructure.Application.Constructors.Services;
 using Projeto_SCFII.Infrastructure.Application.DTO.Usuario;
 using Projeto_SCFII.Infrastructure.Application.Filters;
-using Projeto_SCFII.Infrastructure.Data.Services;
 using ProjetoAcoesSustentaveis.Infrastructure.Domain.Entities;
 
 namespace Projeto_SCFII.Controllers
@@ -111,7 +110,6 @@ namespace Projeto_SCFII.Controllers
                 GeneroId = usuario.GeneroId,
                 TipoUsuarioId = usuario.TipoUsuarioId,
                 StatusUsuarioId = usuario.StatusUsuarioId,
-                DataAdmissao = usuario.DataAdmissao
             };
 
             ViewBag.Cargos = new SelectList((await _cargoService.GetAllAsync()).Data, "Id", "NomeCargo");
@@ -145,7 +143,6 @@ namespace Projeto_SCFII.Controllers
                 GeneroId = usuario.GeneroId,
                 TipoUsuarioId = usuario.TipoUsuarioId,
                 StatusUsuarioId = usuario.StatusUsuarioId,
-                DataAdmissao = usuario.DataAdmissao
             };
 
             ViewBag.Cargos = new SelectList((await _cargoService.GetAllAsync()).Data, "Id", "NomeCargo", usuario.CargoId);

@@ -1,8 +1,7 @@
-﻿namespace ProjetoAcoesSustentaveis.Infrastructure.Domain.Entities
+﻿namespace Projeto_SCFII.Infrastructure.Application.DTO.Endereco
 {
-    public class Endereco
+    public class EnderecoDTO
     {
-        public int Id { get; set; }
         public string? Logradouro { get; set; }
         public int Numero { get; set; }
         public string? Bairro { get; set; }
@@ -11,11 +10,7 @@
         public string? CEP { get; set; }
         public string? Complemento { get; set; }
         public string? PontoReferencia { get; set; }
-
-        public TipoEndereco? TipoEndereco { get; set; }
         public int TipoEnderecoId { get; set; }
-
-        public Usuario? Usuario { get; set; }
-        public int UsuarioId { get; set; }
+        public string? TipoEndereco { get; set; }
     }
 }

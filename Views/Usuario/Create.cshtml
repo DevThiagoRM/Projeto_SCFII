@@ -93,11 +93,6 @@
                     </select>
                     <span asp-validation-for="StatusUsuarioId" class="text-danger small"></span>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <label asp-for="DataAdmissao" class="form-label">Data de Admissão</label>
-                    <input asp-for="DataAdmissao" type="datetime-local" class="form-control" />
-                    <span asp-validation-for="DataAdmissao" class="text-danger small"></span>
-                </div>
             </div>
 
             <!-- Deficiência -->
@@ -110,49 +105,45 @@
                     </div>
                 </div>
                 <div class="col-md-4 mb-3">
-                    <label asp-for="Deficiencias[0].CID" class="form-label">CID</label>
-                    <input asp-for="Deficiencias[0].CID" class="form-control" />
-                    <span asp-validation-for="Deficiencias[0].CID" class="text-danger small"></span>
+                    <label asp-for="CID" class="form-label">CID</label>
+                    <input asp-for="CID" class="form-control" />
+                    <span asp-validation-for="CID" class="text-danger small"></span>
                 </div>
-                <div class="col-md-8 mb-3">
-                    <label asp-for="Deficiencias[0].Descricao" class="form-label">Descrição</label>
-                    <input asp-for="Deficiencias[0].Descricao" class="form-control" />
-                    <span asp-validation-for="Deficiencias[0].Descricao" class="text-danger small"></span>
-                </div>
+
             </div>
 
             <!-- Endereço -->
             <h3 class="mb-3 mt-4 border-bottom pb-2">Endereço</h3>
             <div class="row">
                 <div class="col-md-4 mb-3">
-                    <label asp-for="Enderecos[0].CEP" class="form-label">CEP</label>
-                    <input asp-for="Enderecos[0].CEP" class="form-control" />
-                    <span asp-validation-for="Enderecos[0].CEP" class="text-danger small"></span>
+                    <label asp-for="Endereco.CEP" class="form-label">CEP</label>
+                    <input asp-for="Endereco.CEP" class="form-control" />
+                    <span asp-validation-for="Endereco.CEP" class="text-danger small"></span>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label asp-for="Enderecos[0].Logradouro" class="form-label">Logradouro</label>
-                    <input asp-for="Enderecos[0].Logradouro" class="form-control" />
-                    <span asp-validation-for="Enderecos[0].Logradouro" class="text-danger small"></span>
+                    <label asp-for="Endereco.Logradouro" class="form-label">Logradouro</label>
+                    <input asp-for="Endereco.Logradouro" class="form-control" />
+                    <span asp-validation-for="Endereco.Logradouro" class="text-danger small"></span>
                 </div>
                 <div class="col-md-2 mb-3">
-                    <label asp-for="Enderecos[0].Numero" class="form-label">Número</label>
-                    <input asp-for="Enderecos[0].Numero" class="form-control" />
-                    <span asp-validation-for="Enderecos[0].Numero" class="text-danger small"></span>
+                    <label asp-for="Endereco.Numero" class="form-label">Número</label>
+                    <input asp-for="Endereco.Numero" class="form-control" />
+                    <span asp-validation-for="Endereco.Numero" class="text-danger small"></span>
                 </div>
                 <div class="col-md-4 mb-3">
-                    <label asp-for="Enderecos[0].Bairro" class="form-label">Bairro</label>
-                    <input asp-for="Enderecos[0].Bairro" class="form-control" />
-                    <span asp-validation-for="Enderecos[0].Bairro" class="text-danger small"></span>
+                    <label asp-for="Endereco.Bairro" class="form-label">Bairro</label>
+                    <input asp-for="Endereco.Bairro" class="form-control" />
+                    <span asp-validation-for="Endereco.Bairro" class="text-danger small"></span>
                 </div>
                 <div class="col-md-4 mb-3">
-                    <label asp-for="Enderecos[0].Cidade" class="form-label">Cidade</label>
-                    <input asp-for="Enderecos[0].Cidade" class="form-control" />
-                    <span asp-validation-for="Enderecos[0].Cidade" class="text-danger small"></span>
+                    <label asp-for="Endereco.Cidade" class="form-label">Cidade</label>
+                    <input asp-for="Endereco.Cidade" class="form-control" />
+                    <span asp-validation-for="Endereco.Cidade" class="text-danger small"></span>
                 </div>
                 <div class="col-md-4 mb-3">
-                    <label asp-for="Enderecos[0].UF" class="form-label">UF</label>
-                    <input asp-for="Enderecos[0].UF" class="form-control" />
-                    <span asp-validation-for="Enderecos[0].UF" class="text-danger small"></span>
+                    <label asp-for="Endereco.UF" class="form-label">UF</label>
+                    <input asp-for="Endereco.UF" class="form-control" />
+                    <span asp-validation-for="Endereco.UF" class="text-danger small"></span>
                 </div>
             </div>
 
@@ -160,14 +151,14 @@
             <h3 class="mb-3 mt-4 border-bottom pb-2">Contato</h3>
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label asp-for="Telefones[0].Numero" class="form-label">Número</label>
-                    <input asp-for="Telefones[0].Numero" class="form-control" />
-                    <span asp-validation-for="Telefones[0].Numero" class="text-danger small"></span>
+                    <label asp-for="Telefone.NumeroTelefone" class="form-label">Número</label>
+                    <input asp-for="Telefone.NumeroTelefone" class="form-control" />
+                    <span asp-validation-for="Telefone.NumeroTelefone" class="text-danger small"></span>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label asp-for="Telefones[0].Tipo" class="form-label">Tipo</label>
-                    <input asp-for="Telefones[0].Tipo" class="form-control" />
-                    <span asp-validation-for="Telefones[0].Tipo" class="text-danger small"></span>
+                    <label asp-for="Telefone.TipoTelefoneId" class="form-label">Tipo</label>
+                    <input asp-for="Telefone.TipoTelefoneId" class="form-control" />
+                    <span asp-validation-for="Telefone.TipoTelefoneId" class="text-danger small"></span>
                 </div>
             </div>
 
@@ -183,68 +174,3 @@
         <a href="@Url.Action("Index", "Usuario")" class="btn btn-secondary">Voltar</a>
     </div>
 </div>
-
-<script>
-    function updateIndices(containerId, itemClass, inputNamePrefix) {
-        const container = document.getElementById(containerId);
-        const items = container.getElementsByClassName(itemClass);
-
-        for (let i = 0; i < items.length; i++) {
-            const inputs = items[i].querySelectorAll('input');
-            inputs.forEach(input => {
-                // Ajusta o atributo name para o índice correto: Exemplo: Enderecos[0].CEP
-                const prop = input.name.split('.').pop();
-                input.name = `${inputNamePrefix}[${i}].${prop}`;
-            });
-        }
-    }
-
-    // Endereços
-    document.getElementById('btn-add-endereco').addEventListener('click', function() {
-        const container = document.getElementById('enderecos-container');
-        const count = container.getElementsByClassName('endereco-item').length;
-
-        const novoEndereco = document.createElement('div');
-        novoEndereco.classList.add('endereco-item', 'mb-3');
-        novoEndereco.innerHTML = `
-            <input name="Enderecos[${count}].CEP" placeholder="CEP" class="form-control mb-1" />
-            <input name="Enderecos[${count}].Logradouro" placeholder="Logradouro" class="form-control mb-1" />
-            <input name="Enderecos[${count}].Numero" placeholder="Número" class="form-control mb-1" />
-            <button type="button" class="btn btn-danger btn-sm btn-remove-endereco">Remover</button>
-            <hr />
-        `;
-        container.appendChild(novoEndereco);
-    });
-
-    // Telefones
-    document.getElementById('btn-add-telefone').addEventListener('click', function() {
-        const container = document.getElementById('telefones-container');
-        const count = container.getElementsByClassName('telefone-item').length;
-
-        const novoTelefone = document.createElement('div');
-        novoTelefone.classList.add('telefone-item', 'mb-3');
-        novoTelefone.innerHTML = `
-            <input name="Telefones[${count}].Numero" placeholder="Número" class="form-control mb-1" />
-            <input name="Telefones[${count}].Tipo" placeholder="Tipo" class="form-control mb-1" />
-            <button type="button" class="btn btn-danger btn-sm btn-remove-telefone">Remover</button>
-            <hr />
-        `;
-        container.appendChild(novoTelefone);
-    });
-
-    // Delegação de eventos para remover endereços
-    document.getElementById('enderecos-container').addEventListener('click', function(e) {
-        if (e.target && e.target.classList.contains('btn-remove-endereco')) {
-            e.target.parentElement.remove();
-            updateIndices('enderecos-container', 'endereco-item', 'Enderecos');
-        }
-    });
-
-    // Delegação de eventos para remover telefones
-    document.getElementById('telefones-container').addEventListener('click', function(e) {
-        if (e.target && e.target.classList.contains('btn-remove-telefone')) {
-            e.target.parentElement.remove();
-            updateIndices('telefones-container', 'telefone-item', 'Telefones');
-        }
-    });
-</script>

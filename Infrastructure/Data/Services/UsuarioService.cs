@@ -2,10 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using Projeto_SCFII.Infrastructure.Application.Constructors.Repositories;
 using Projeto_SCFII.Infrastructure.Application.Constructors.Services;
+using Projeto_SCFII.Infrastructure.Application.DTO.Endereco;
 using Projeto_SCFII.Infrastructure.Application.DTO.Shared;
+using Projeto_SCFII.Infrastructure.Application.DTO.Telefone;
 using Projeto_SCFII.Infrastructure.Application.DTO.Usuario;
 using Projeto_SCFII.Infrastructure.Application.Filters;
-using Projeto_SCFII.Infrastructure.Domain.Entities;
 using ProjetoAcoesSustentaveis.Infrastructure.Domain.Entities;
 
 namespace Projeto_SCFII.Infrastructure.Data.Services
@@ -25,8 +26,11 @@ namespace Projeto_SCFII.Infrastructure.Data.Services
         {
             try
             {
-                if (await _usuarioRepository.UsuarioEmailExistsAsync(usuarioCreateDto.Email))
+                if (await _usuarioRepository.UsuarioEmailExistsAsync(usuarioCreateDto.Email!))
                     return ResponseDTO<UsuarioDTO>.CreateError("Email já cadastrado.");
+
+                if (usuarioCreateDto.Senha != usuarioCreateDto.ConfirmarSenha)
+                    return ResponseDTO<UsuarioDTO>.CreateError("As senhas não coincidem.");
 
                 var usuario = new Usuario
                 {
@@ -40,23 +44,23 @@ namespace Projeto_SCFII.Infrastructure.Data.Services
                     GeneroId = usuarioCreateDto.GeneroId,
                     StatusUsuarioId = usuarioCreateDto.StatusUsuarioId,
                     TipoUsuarioId = usuarioCreateDto.TipoUsuarioId,
-                    DataAdmissao = usuarioCreateDto.DataAdmissao,
-                    DataDemissao = usuarioCreateDto.DataDemissao,
                     PossuiDeficiencia = usuarioCreateDto.PossuiDeficiencia,
-
-                    UsuarioEndereco = usuarioCreateDto.Enderecos?
-                        .Where(e => !string.IsNullOrWhiteSpace(e.CEP))
-                        .Select(e => new UsuarioEndereco { EnderecoId = e.EnderecoId })
-                        .ToList() ?? new List<UsuarioEndereco>(),
-
-                    UsuarioTelefone = usuarioCreateDto.Telefones?
-                        .Where(t => !string.IsNullOrWhiteSpace(t.Numero))
-                        .Select(t => new UsuarioTelefone { TelefoneId = t.TelefoneId })
-                        .ToList() ?? new List<UsuarioTelefone>(),
-
-                    UsuarioDeficiencia = usuarioCreateDto.Deficiencias?
-                        .Select(d => new UsuarioDeficiencia { DeficienciaId = d.DeficienciaId })
-                        .ToList() ?? new List<UsuarioDeficiencia>()
+                    CID = usuarioCreateDto.CID,
+                    Endereco = usuarioCreateDto.Endereco != null ? new Endereco
+                    {
+                        Logradouro = usuarioCreateDto.Endereco.Logradouro,
+                        Numero = usuarioCreateDto.Endereco.Numero,
+                        Complemento = usuarioCreateDto.Endereco.Complemento,
+                        Bairro = usuarioCreateDto.Endereco.Bairro,
+                        Cidade = usuarioCreateDto.Endereco.Cidade,
+                        UF = usuarioCreateDto.Endereco.UF,
+                        CEP = usuarioCreateDto.Endereco.CEP
+                    } : null,
+                    Telefone = usuarioCreateDto.Telefone != null ? new Telefone
+                    {
+                        NumeroTelefone = usuarioCreateDto.Telefone.NumeroTelefone,
+                        TipoTelefoneId = usuarioCreateDto.Telefone.TipoTelefoneId,
+                    } : null
                 };
 
 
@@ -179,8 +183,6 @@ namespace Projeto_SCFII.Infrastructure.Data.Services
                 usuario.GeneroId = usuarioUpdateDto.GeneroId;
                 usuario.StatusUsuarioId = usuarioUpdateDto.StatusUsuarioId;
                 usuario.TipoUsuarioId = usuarioUpdateDto.TipoUsuarioId;
-                usuario.DataAdmissao = usuarioUpdateDto.DataAdmissao;
-                usuario.DataDemissao = usuarioUpdateDto.DataDemissao;
 
                 var atualizado = await _usuarioRepository.UpdateUsuarioAsync(usuario);
                 return ResponseDTO<UsuarioDTO>.CreateSuccess("Usuário atualizado com sucesso.", MapToUsuarioDTO(atualizado));
@@ -267,10 +269,26 @@ namespace Projeto_SCFII.Infrastructure.Data.Services
                 NomeStatusUsuario = usuario.StatusUsuario?.Status,
                 TipoUsuarioId = usuario.TipoUsuarioId,
                 NomeTipoUsuario = usuario.TipoUsuario?.TipoDeUsuario,
+                PossuiDeficiencia = usuario.PossuiDeficiencia,
+                CID = usuario.CID,
+                Endereco = usuario.Endereco != null ? new EnderecoDTO
+                {
+                    Logradouro = usuario.Endereco.Logradouro,
+                    Numero = usuario.Endereco.Numero,
+                    Complemento = usuario.Endereco.Complemento,
+                    Bairro = usuario.Endereco.Bairro,
+                    Cidade = usuario.Endereco.Cidade,
+                    UF = usuario.Endereco.UF,
+                    CEP = usuario.Endereco.CEP
+                } : null,
+                Telefone = usuario.Telefone != null ? new TelefoneDTO
+                {
+                    NumeroTelefone = usuario.Telefone.NumeroTelefone,
+                    TipoTelefoneId = usuario.Telefone.TipoTelefoneId,
+                    TipoTelefone = usuario.Telefone.TipoTelefone?.TipoDeTelefone
+                } : null,
                 DataCriacao = usuario.DataCriacao,
                 UltimaAtualizacao = usuario.UltimaAtualizacao,
-                DataAdmissao = usuario.DataAdmissao,
-                DataDemissao = usuario.DataDemissao,
                 Deleted = usuario.Deleted
             };
         }
