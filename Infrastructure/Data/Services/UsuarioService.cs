@@ -5,6 +5,7 @@ using Projeto_SCFII.Infrastructure.Application.Constructors.Services;
 using Projeto_SCFII.Infrastructure.Application.DTO.Shared;
 using Projeto_SCFII.Infrastructure.Application.DTO.Usuario;
 using Projeto_SCFII.Infrastructure.Application.Filters;
+using Projeto_SCFII.Infrastructure.Domain.Entities;
 using ProjetoAcoesSustentaveis.Infrastructure.Domain.Entities;
 
 namespace Projeto_SCFII.Infrastructure.Data.Services
@@ -40,8 +41,27 @@ namespace Projeto_SCFII.Infrastructure.Data.Services
                     StatusUsuarioId = usuarioCreateDto.StatusUsuarioId,
                     TipoUsuarioId = usuarioCreateDto.TipoUsuarioId,
                     DataAdmissao = usuarioCreateDto.DataAdmissao,
-                    DataDemissao = usuarioCreateDto.DataDemissao
+                    DataDemissao = usuarioCreateDto.DataDemissao,
+                    PossuiDeficiencia = usuarioCreateDto.PossuiDeficiencia,
+
+                    UsuarioEndereco = usuarioCreateDto.Enderecos?
+                        .Where(e => !string.IsNullOrWhiteSpace(e.CEP))
+                        .Select(e => new UsuarioEndereco { EnderecoId = e.EnderecoId })
+                        .ToList() ?? new List<UsuarioEndereco>(),
+
+                    UsuarioTelefone = usuarioCreateDto.Telefones?
+                        .Where(t => !string.IsNullOrWhiteSpace(t.Numero))
+                        .Select(t => new UsuarioTelefone { TelefoneId = t.TelefoneId })
+                        .ToList() ?? new List<UsuarioTelefone>(),
+
+                    UsuarioDeficiencia = usuarioCreateDto.Deficiencias?
+                        .Select(d => new UsuarioDeficiencia { DeficienciaId = d.DeficienciaId })
+                        .ToList() ?? new List<UsuarioDeficiencia>()
                 };
+
+
+                if (usuarioCreateDto.Senha != usuarioCreateDto.ConfirmarSenha)
+                    return ResponseDTO<UsuarioDTO>.CreateError("As senhas não coincidem.");
 
                 var criado = await _usuarioRepository.CreateUsuarioAsync(usuario);
                 var dto = MapToUsuarioDTO(criado);

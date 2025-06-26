@@ -30,10 +30,11 @@ namespace Projeto_SCFII.Controllers
             if (!response.Success || response.Data == null)
             {
                 ModelState.AddModelError(string.Empty, "Usuário ou senha inválidos.");
-                return View(model);
+                return View("Index", model);  // << aqui
             }
             return RedirectToAction("Index", "Usuario");
         }
+
 
 
         [HttpGet]

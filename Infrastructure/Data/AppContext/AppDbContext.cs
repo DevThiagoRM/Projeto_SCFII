@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Projeto_SCFII.Infrastructure.Domain.Entities;
 using ProjetoAcoesSustentaveis.Infrastructure.Domain.Entities;
 
 namespace ProjetoAcoesSustentaveis.Infrastructure.Data.AppContext
@@ -23,6 +24,7 @@ namespace ProjetoAcoesSustentaveis.Infrastructure.Data.AppContext
         public DbSet<StatusUsuario> StatusUsuarios { get; set; }
         public DbSet<Genero> Generos { get; set; }
         public DbSet<Raca> Racas { get; set; }
+        public DbSet<Deficiencia> Deficiencia { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -129,6 +131,37 @@ namespace ProjetoAcoesSustentaveis.Infrastructure.Data.AppContext
                     new Raca { Id = 6, NomeRaca = "Prefere não dizer" }
                 );
             });
+
+            modelBuilder.Entity<Deficiencia>(entity =>
+            {
+                entity.ToTable("Deficiencias");
+
+                entity.HasKey(c => c.Id);
+
+                entity.Property(c => c.CID)
+                      .IsRequired()
+                      .HasMaxLength(50);
+
+                entity.Property(c => c.Descricao)
+                      .IsRequired()
+                      .HasMaxLength(255);
+
+                entity.HasData(
+                    new Deficiencia { Id = 1, CID = "Z89.4", Descricao = "Deficiência Física – Amputação" },
+                    new Deficiencia { Id = 2, CID = "G82.1", Descricao = "Deficiência Física – Paralisia" },
+                    new Deficiencia { Id = 3, CID = "H90.3", Descricao = "Deficiência Auditiva" },
+                    new Deficiencia { Id = 4, CID = "H54.0", Descricao = "Deficiência Visual – Cegueira" },
+                    new Deficiencia { Id = 5, CID = "H54.2", Descricao = "Deficiência Visual – Baixa Visão" },
+                    new Deficiencia { Id = 6, CID = "F70", Descricao = "Deficiência Intelectual Leve" },
+                    new Deficiencia { Id = 7, CID = "F71", Descricao = "Deficiência Intelectual Moderada" },
+                    new Deficiencia { Id = 8, CID = "F72", Descricao = "Deficiência Intelectual Grave" },
+                    new Deficiencia { Id = 9, CID = "F78", Descricao = "Deficiência Múltipla" },
+                    new Deficiencia { Id = 10, CID = "F84.0", Descricao = "Transtorno do Espectro Autista" },
+                    new Deficiencia { Id = 11, CID = "F31.3", Descricao = "Deficiência Psíquica" },
+                    new Deficiencia { Id = 12, CID = "Q90.9", Descricao = "Síndrome de Down" }
+                );
+            });
+
 
             modelBuilder.Entity<StatusUsuario>(entity =>
             {
@@ -296,6 +329,20 @@ namespace ProjetoAcoesSustentaveis.Infrastructure.Data.AppContext
                     .WithMany(e => e.UsuarioTelefone)
                     .HasForeignKey(ue => ue.TelefoneId);
             });
+
+            modelBuilder.Entity<UsuarioDeficiencia>(entity =>
+            {
+                entity.HasKey(e => new { e.UsuarioId, e.DeficienciaId });
+
+                entity.HasOne(e => e.Usuario)
+                      .WithMany(u => u.UsuarioDeficiencia)
+                      .HasForeignKey(e => e.UsuarioId);
+
+                entity.HasOne(e => e.Deficiencia)
+                      .WithMany(d => d.UsuarioDeficiencia)
+                      .HasForeignKey(e => e.DeficienciaId);
+            });
+
 
             base.OnModelCreating(modelBuilder);
 

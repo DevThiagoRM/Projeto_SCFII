@@ -1,4 +1,6 @@
-﻿namespace ProjetoAcoesSustentaveis.Infrastructure.Domain.Entities
+﻿using Projeto_SCFII.Infrastructure.Domain.Entities;
+
+namespace ProjetoAcoesSustentaveis.Infrastructure.Domain.Entities
 {
     public class Usuario
     {
@@ -21,6 +23,9 @@
         public Genero? Genero { get; set; }
         public int GeneroId { get; set; }
 
+        public bool PossuiDeficiencia { get; set; }
+
+        public ICollection<UsuarioDeficiencia> UsuarioDeficiencia { get; set; } = new HashSet<UsuarioDeficiencia>();
         public ICollection<UsuarioEndereco>? UsuarioEndereco { get; set; } = new HashSet<UsuarioEndereco>();
         public ICollection<UsuarioTelefone>? UsuarioTelefone { get; set; } = new HashSet<UsuarioTelefone>();
 

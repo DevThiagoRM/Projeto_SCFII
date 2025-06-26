@@ -1,4 +1,7 @@
-﻿namespace Projeto_SCFII.Infrastructure.Application.DTO.Usuario
+﻿using Projeto_SCFII.Infrastructure.Domain.Entities;
+using ProjetoAcoesSustentaveis.Infrastructure.Domain.Entities;
+
+namespace Projeto_SCFII.Infrastructure.Application.DTO.Usuario
 {
     public class UsuarioDTO
     {
@@ -17,6 +20,9 @@
         public int RacaId { get; set; }
         public string? NomeRaca { get; set; }
 
+        public bool PossuiDeficiencia { get; set; }
+        public ICollection<UsuarioDeficiencia>? UsuarioDeficiencia { get; set; } = new HashSet<UsuarioDeficiencia>();
+
         public int GeneroId { get; set; }
         public string? NomeGenero { get; set; }
 
@@ -25,6 +31,9 @@
 
         public int TipoUsuarioId { get; set; }
         public string? NomeTipoUsuario { get; set; }
+
+        public ICollection<UsuarioEndereco>? UsuarioEndereco { get; set; } = new HashSet<UsuarioEndereco>();
+        public ICollection<UsuarioTelefone>? UsuarioTelefone { get; set; } = new HashSet<UsuarioTelefone>();
 
         public DateTime DataCriacao { get; set; }
         public DateTime UltimaAtualizacao { get; set; }

@@ -1,3 +1,9 @@
 ﻿.card-create {
-    zoom: 0.85;
+    margin: auto;
+    width: 65%;
 }
+
+label{
+    font-size: 20px;
+}
+
