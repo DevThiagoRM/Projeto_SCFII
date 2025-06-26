@@ -1,0 +1,119 @@
+﻿@model Projeto_SCFII.Infrastructure.Application.DTO.Usuario.UsuarioCreateDTO
+
+@{
+    ViewData["Title"] = "Cadastrar Usuário";
+    Layout = null; // sem layout para manter consistência com as demais páginas
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - Projeto_SCFII</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            padding: 2rem;
+        }
+
+        .card {
+            border-radius: 1rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .card-header {
+            background-color: #0d6efd;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+            text-align: center;
+        }
+
+        .card-footer {
+            background-color: #f1f3f5;
+            border-bottom-left-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+            text-align: center;
+        }
+
+        .btn-custom {
+            background-color: #fd7e14;
+            border-color: #fd7e14;
+        }
+
+            .btn-custom:hover {
+                background-color: #e76b0d;
+                border-color: #e76b0d;
+            }
+
+        .form-control, .form-select {
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="card-header">
+            Cadastrar Novo Usuário
+        </div>
+
+        <div class="card-body">
+            <form asp-action="Create" method="post" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Nome" class="form-label">Nome</label>
+                    <input asp-for="Nome" class="form-control" placeholder="Digite o nome" />
+                    <span asp-validation-for="Nome" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Sobrenome" class="form-label">Sobrenome</label>
+                    <input asp-for="Sobrenome" class="form-control" placeholder="Digite o sobrenome" />
+                    <span asp-validation-for="Sobrenome" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label">E-mail</label>
+                    <input asp-for="Email" class="form-control" placeholder="exemplo@email.com" />
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Senha" class="form-label">Senha</label>
+                    <input asp-for="Senha" type="password" class="form-control" placeholder="Digite a senha" />
+                    <span asp-validation-for="Senha" class="text-danger small"></span>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-custom btn-lg">Salvar</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="card-footer">
+            <a href="@Url.Action("Index", "Usuario")" class="btn btn-outline-secondary">Voltar</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-3gJwYp7mDNKlfG/eSrtzNU3fJ2J2k5pOCb+qyjN7/tE=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+            crossorigin="anonymous"></script>
+
+</body>
+</html>

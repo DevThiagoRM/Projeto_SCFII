@@ -10,6 +10,8 @@ namespace Projeto_SCFII.Infrastructure.Application.Constructors.Repositories
 
         Task<Usuario?> GetUsuarioByIdAsync(int id);
         Task<Usuario?> GetUsuarioByEmailAsync(string email);
+        Task<Usuario?> GetUsuarioCompletoPorEmailAsync(string email);
+
 
         Task<Usuario> CreateUsuarioAsync(Usuario usuario);
         Task<Usuario> UpdateUsuarioAsync(Usuario usuario);

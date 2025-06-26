@@ -1,7 +1,28 @@
+using Microsoft.EntityFrameworkCore;
+using Projeto_SCFII.Infrastructure.Application.Constructors.Repositories;
+using Projeto_SCFII.Infrastructure.Application.Constructors.Services;
+using Projeto_SCFII.Infrastructure.Data.Repositories;
+using Projeto_SCFII.Infrastructure.Data.Services;
+using ProjetoAcoesSustentaveis.Infrastructure.Data.AppContext;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Contexto
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Repositories
+
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+
+
+// Services
+
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
 var app = builder.Build();
 
@@ -22,7 +43,7 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
+    pattern: "{controller=Usuario}/{action=Index}")
     .WithStaticAssets();
 
 

@@ -18,5 +18,7 @@ namespace Projeto_SCFII.Infrastructure.Application.Constructors.Services
 
         Task<ResponseDTO<bool>> UsuarioExistsAsync(int id);
         Task<ResponseDTO<bool>> UsuarioEmailExistsAsync(string email);
+
+        Task<ResponseDTO<UsuarioDTO?>> ValidarLoginAsync(string email, string senha);
     }
 }

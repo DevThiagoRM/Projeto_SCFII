@@ -5,9 +5,7 @@ using Projeto_SCFII.Infrastructure.Application.Filters;
 
 namespace Projeto_SCFII.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class UsuarioController : ControllerBase
+    public class UsuarioController : Controller
     {
         private readonly IUsuarioService _usuarioService;
 
@@ -15,6 +13,18 @@ namespace Projeto_SCFII.Controllers
         {
             _usuarioService = usuarioService;
         }
+
+        public async Task<IActionResult> Index()
+        {
+            var response = await _usuarioService.GetAllUsuariosAsync();
+            if (!response.Success)
+            {
+                return View(new List<UsuarioDTO>());
+            }
+
+            return View(response.Data);
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -45,6 +55,13 @@ namespace Projeto_SCFII.Controllers
 
             return Ok(response);
         }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
 
         [HttpPost("filtro")]
         public async Task<IActionResult> GetByFiltro([FromBody] UsuarioFiltro filtro)

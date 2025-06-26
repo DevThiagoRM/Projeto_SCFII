@@ -198,6 +198,28 @@ namespace Projeto_SCFII.Infrastructure.Data.Services
             }
         }
 
+        public async Task<ResponseDTO<UsuarioDTO?>> ValidarLoginAsync(string email, string senha)
+        {
+            try
+            {
+                var usuario = await _usuarioRepository.GetUsuarioCompletoPorEmailAsync(email);
+                if (usuario == null)
+                    return ResponseDTO<UsuarioDTO?>.CreateError("Usuário não encontrado.");
+
+                bool senhaValida = BCrypt.Net.BCrypt.Verify(senha, usuario.Senha);
+                if (!senhaValida)
+                    return ResponseDTO<UsuarioDTO?>.CreateError("Senha inválida.");
+
+                return ResponseDTO<UsuarioDTO?>.CreateSuccess("Login válido.", MapToUsuarioDTO(usuario));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao validar login");
+                return ResponseDTO<UsuarioDTO?>.CreateError("Erro interno ao validar login.");
+            }
+        }
+
+
         private UsuarioDTO MapToUsuarioDTO(Usuario usuario)
         {
             return new UsuarioDTO

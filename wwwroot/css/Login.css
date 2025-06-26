@@ -1,0 +1,74 @@
+﻿:root {
+    --background-color: #f5f7fa;
+    --text-color: #ddd;
+    --azul-maxi: #3a3e98;
+    --laranja-maxi: #f58220;
+    --branco-maxi: #ffffff;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: radial-gradient(circle at center, var(--azul-maxi) 0%, var(--laranja-maxi) 0%, var(--branco-maxi) 100%);
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border: 0px solid transparent;
+    border-radius: 25px;
+}
+
+.card-header {
+    background-color: var(--azul-maxi);
+    color: white;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    text-align: center;
+}
+
+    .card-header img {
+        max-width: 200px;
+        margin-bottom: 1rem;
+    }
+
+.list-group-item {
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--azul-maxi);
+}
+
+    .list-group-item:hover {
+        background-color: var(--laranja-maxi);
+        color: var(--branco-maxi);
+        cursor: pointer;
+    }
+
+    .list-group-item.text-danger {
+        font-weight: 700;
+    }
+
+.card-footer {
+    background-color: var(--azul-maxi);
+    color: white;
+    text-align: center;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+.login-container {
+    min-height: 100vh;
+    padding: 0;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+

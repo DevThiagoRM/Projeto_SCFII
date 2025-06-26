@@ -99,5 +99,11 @@ namespace Projeto_SCFII.Infrastructure.Data.Repositories
         {
             return await _context.Usuarios.AnyAsync(u => u.Id == id);
         }
+
+        public async Task<Usuario?> GetUsuarioCompletoPorEmailAsync(string email)
+        {
+            return await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == email && !u.Deleted);
+        }
+
     }
 }
