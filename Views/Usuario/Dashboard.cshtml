@@ -1,4 +1,5 @@
 ﻿@model Projeto_SCFII.Infrastructure.Application.DTO.Usuario.DashboardDTO
+@using System.Text.Json
 
 @{
     ViewData["Title"] = "Dashboard de Diversidade";
@@ -39,7 +40,7 @@
     </div>
 
     <div class="row">
-        <!-- Tabela com dados por Raça -->
+        <!-- Tabela por Raça -->
         <div class="col-md-6 mb-4">
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">
@@ -71,7 +72,7 @@
             </div>
         </div>
 
-        <!-- Tabela com dados por Gênero -->
+        <!-- Tabela por Gênero -->
         <div class="col-md-6 mb-4">
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">
@@ -108,30 +109,12 @@
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Dados para os gráficos
-        const racaData = {
-            labels: @Html.Raw(Json.Serialize(Model.PorRaca.Select(r => r.Nome))),
-            datasets: [{
-                data: @Html.Raw(Json.Serialize(Model.PorRaca.Select(r => r.Percentual))),
-                backgroundColor: [
-                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
-                    '#FF9F40', '#8AC24A', '#607D8B', '#E91E63', '#9C27B0'
-                ]
-            }]
-        };
+        const racaLabels = @Html.Raw(JsonSerializer.Serialize(Model.PorRaca.Select(r => r.Nome)));
+        const racaData = @Html.Raw(JsonSerializer.Serialize(Model.PorRaca.Select(r => r.Percentual)));
 
-        const generoData = {
-            labels: @Html.Raw(Json.Serialize(Model.PorGenero.Select(g => g.Nome))),
-            datasets: [{
-                data: @Html.Raw(Json.Serialize(Model.PorGenero.Select(g => g.Percentual))),
-                backgroundColor: [
-                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
-                    '#FF9F40', '#8AC24A', '#607D8B', '#E91E63', '#9C27B0'
-                ]
-            }]
-        };
+        const generoLabels = @Html.Raw(JsonSerializer.Serialize(Model.PorGenero.Select(g => g.Nome)));
+        const generoData = @Html.Raw(JsonSerializer.Serialize(Model.PorGenero.Select(g => g.Percentual)));
 
-        // Configurações comuns
         const chartOptions = {
             responsive: true,
             maintainAspectRatio: false,
@@ -149,17 +132,34 @@
             }
         };
 
-        // Inicializar gráficos
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             new Chart(document.getElementById('racaChart'), {
                 type: 'pie',
-                data: racaData,
+                data: {
+                    labels: racaLabels,
+                    datasets: [{
+                        data: racaData,
+                        backgroundColor: [
+                            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
+                            '#9966FF', '#FF9F40', '#8AC24A', '#607D8B'
+                        ]
+                    }]
+                },
                 options: chartOptions
             });
 
             new Chart(document.getElementById('generoChart'), {
                 type: 'pie',
-                data: generoData,
+                data: {
+                    labels: generoLabels,
+                    datasets: [{
+                        data: generoData,
+                        backgroundColor: [
+                            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
+                            '#9966FF', '#FF9F40', '#8AC24A', '#607D8B'
+                        ]
+                    }]
+                },
                 options: chartOptions
             });
         });

@@ -118,6 +118,7 @@ namespace Projeto_SCFII.Infrastructure.Data.Repositories
         public async Task<ResponseDTO<DashboardDTO>> GetDashboardDataAsync()
         {
             var usuarios = await _context.Usuarios
+                                .Where(u => !u.Deleted)
                                 .Include(u => u.Raca)
                                 .Include(u => u.Genero)
                                 .Include(u => u.StatusUsuario)

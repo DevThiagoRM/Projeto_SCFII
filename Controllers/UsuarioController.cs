@@ -161,10 +161,9 @@ namespace Projeto_SCFII.Controllers
         [HttpGet("dashboard")]
         public async Task<IActionResult> Dashboard()
         {
-            var response = await _usuarioService.GetDashboardDataAsync();
+            var response = await _usuarioService.GetDataDashboardAsync();
             if (!response.Success)
             {
-                // Você pode tratar o erro de forma mais elegante
                 return View(new DashboardDTO());
             }
 

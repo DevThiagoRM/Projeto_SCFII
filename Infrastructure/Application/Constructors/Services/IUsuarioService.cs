@@ -9,7 +9,7 @@ namespace Projeto_SCFII.Infrastructure.Application.Constructors.Services
     {
         Task<ResponseDTO<IEnumerable<UsuarioDTO>>> GetAllUsuariosAsync();
         Task<ResponseDTO<IEnumerable<UsuarioDTO>>> GetUsuariosByFiltroAsync(UsuarioFiltro filtro);
-        Task<ResponseDTO<DashboardDTO>> ObterDadosDashboardAsync();
+        Task<ResponseDTO<DashboardDTO>> GetDataDashboardAsync();
 
         Task<ResponseDTO<UsuarioDTO?>> GetUsuarioByIdAsync(int id);
         Task<ResponseDTO<UsuarioDTO?>> GetUsuarioByEmailAsync(string email);

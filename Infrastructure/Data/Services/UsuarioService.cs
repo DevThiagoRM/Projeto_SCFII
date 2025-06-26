@@ -221,7 +221,7 @@ namespace Projeto_SCFII.Infrastructure.Data.Services
             }
         }
 
-        public async Task<ResponseDTO<DashboardDTO>> ObterDadosDashboardAsync()
+        public async Task<ResponseDTO<DashboardDTO>> GetDataDashboardAsync()
         {
             return await _usuarioRepository.GetDashboardDataAsync();
         }
