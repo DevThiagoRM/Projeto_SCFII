@@ -54,7 +54,7 @@ namespace Projeto_SCFII.Infrastructure.Data.Services
                         Bairro = usuarioCreateDto.Endereco.Bairro,
                         Cidade = usuarioCreateDto.Endereco.Cidade,
                         UF = usuarioCreateDto.Endereco.UF,
-                        CEP = usuarioCreateDto.Endereco.CEP
+                        CEP = usuarioCreateDto.Endereco.CEP,
                     } : null,
                     Telefone = usuarioCreateDto.Telefone != null ? new Telefone
                     {
@@ -247,7 +247,6 @@ namespace Projeto_SCFII.Infrastructure.Data.Services
         {
             return await _usuarioRepository.GetDashboardDataAsync();
         }
-
 
         private UsuarioDTO MapToUsuarioDTO(Usuario usuario)
         {

@@ -5,6 +5,7 @@
         public int TotalUsuarios { get; set; }
         public List<ItemDashboardDTO>? PorRaca { get; set; }
         public List<ItemDashboardDTO>? PorGenero { get; set; }
+        public List<ItemDashboardDTO>? PorDeficiencia { get; set; }
         public List<ItemDashboardDTO>? PorStatus { get; set; }
     }
 

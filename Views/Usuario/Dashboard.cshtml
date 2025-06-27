@@ -1,6 +1,8 @@
 ﻿@model Projeto_SCFII.Infrastructure.Application.DTO.Usuario.DashboardDTO
 @using System.Text.Json
 
+<link href="~/css/Dashboard/Dashboard.css" rel="stylesheet" />
+
 @{
     ViewData["Title"] = "Dashboard de Diversidade";
 }
@@ -8,14 +10,14 @@
 <div class="container-fluid">
     <div class="row mb-4">
         <div class="col-12">
-            <h1 class="display-4">Dashboard de Diversidade</h1>
+            <h2>Dashboard de Diversidade</h2>
             <p class="lead">Total de funcionários: @Model.TotalUsuarios</p>
         </div>
     </div>
 
     <div class="row">
         <!-- Gráfico por Raça -->
-        <div class="col-md-6 mb-4">
+        <div class="col-md-4 mb-4">
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">
                     <h5 class="mb-0">Distribuição por Raça/Cor</h5>
@@ -27,7 +29,7 @@
         </div>
 
         <!-- Gráfico por Gênero -->
-        <div class="col-md-6 mb-4">
+        <div class="col-md-4 mb-4">
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">
                     <h5 class="mb-0">Distribuição por Gênero</h5>
@@ -37,11 +39,23 @@
                 </div>
             </div>
         </div>
+
+        <!-- Gráfico por Deficiência -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Distribuição por Deficiência</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="deficienciaChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="row">
         <!-- Tabela por Raça -->
-        <div class="col-md-6 mb-4">
+        <div class="col-md-4 mb-4">
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">
                     <h5 class="mb-0">Dados por Raça/Cor</h5>
@@ -73,7 +87,7 @@
         </div>
 
         <!-- Tabela por Gênero -->
-        <div class="col-md-6 mb-4">
+        <div class="col-md-4 mb-4">
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">
                     <h5 class="mb-0">Dados por Gênero</h5>
@@ -103,6 +117,38 @@
                 </div>
             </div>
         </div>
+
+        <!-- Tabela por Deficiência -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Dados por Deficiência</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Tipo</th>
+                                    <th>Quantidade</th>
+                                    <th>Percentual</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.PorDeficiencia)
+                                {
+                                    <tr>
+                                        <td>@item.Nome</td>
+                                        <td>@item.Quantidade</td>
+                                        <td>@item.Percentual.ToString("N1")%</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -115,16 +161,17 @@
         const generoLabels = @Html.Raw(JsonSerializer.Serialize(Model.PorGenero.Select(g => g.Nome)));
         const generoData = @Html.Raw(JsonSerializer.Serialize(Model.PorGenero.Select(g => g.Percentual)));
 
+        const deficienciaLabels = @Html.Raw(JsonSerializer.Serialize(Model.PorDeficiencia.Select(d => d.Nome)));
+        const deficienciaData = @Html.Raw(JsonSerializer.Serialize(Model.PorDeficiencia.Select(d => d.Percentual)));
+
         const chartOptions = {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: {
-                    position: 'right',
-                },
+                legend: { position: 'right' },
                 tooltip: {
                     callbacks: {
-                        label: function(context) {
+                        label: function (context) {
                             return `${context.label}: ${context.raw.toFixed(1)}%`;
                         }
                     }
@@ -137,13 +184,7 @@
                 type: 'pie',
                 data: {
                     labels: racaLabels,
-                    datasets: [{
-                        data: racaData,
-                        backgroundColor: [
-                            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
-                            '#9966FF', '#FF9F40', '#8AC24A', '#607D8B'
-                        ]
-                    }]
+                    datasets: [{ data: racaData, backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'] }]
                 },
                 options: chartOptions
             });
@@ -152,13 +193,16 @@
                 type: 'pie',
                 data: {
                     labels: generoLabels,
-                    datasets: [{
-                        data: generoData,
-                        backgroundColor: [
-                            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
-                            '#9966FF', '#FF9F40', '#8AC24A', '#607D8B'
-                        ]
-                    }]
+                    datasets: [{ data: generoData, backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56', '#4BC0C0', '#9966FF', '#8AC24A'] }]
+                },
+                options: chartOptions
+            });
+
+            new Chart(document.getElementById('deficienciaChart'), {
+                type: 'pie',
+                data: {
+                    labels: deficienciaLabels,
+                    datasets: [{ data: deficienciaData, backgroundColor: ['#4CAF50', '#F44336'] }]
                 },
                 options: chartOptions
             });

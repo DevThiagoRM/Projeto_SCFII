@@ -12,9 +12,6 @@
         public string? Complemento { get; set; }
         public string? PontoReferencia { get; set; }
 
-        public TipoEndereco? TipoEndereco { get; set; }
-        public int TipoEnderecoId { get; set; }
-
         public Usuario? Usuario { get; set; }
         public int UsuarioId { get; set; }
     }

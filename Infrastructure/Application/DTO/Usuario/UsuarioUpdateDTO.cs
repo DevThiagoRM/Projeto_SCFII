@@ -5,6 +5,7 @@ namespace Projeto_SCFII.Infrastructure.Application.DTO.Usuario
 {
     public class UsuarioUpdateDTO
     {
+        public int UsuarioId { get; set; }
         public string? Nome { get; set; }
         public string? Sobrenome { get; set; }
         public string? NomeCompleto => $"{Nome} {Sobrenome}";
@@ -19,11 +20,11 @@ namespace Projeto_SCFII.Infrastructure.Application.DTO.Usuario
         public int RacaId { get; set; }
         public string? NomeRaca { get; set; }
 
-        public bool PossuiDeficiencia { get; set; }
-        public string? CID { get; set; }
-
         public int GeneroId { get; set; }
         public string? NomeGenero { get; set; }
+
+        public bool PossuiDeficiencia { get; set; }
+        public string? CID { get; set; }
 
         public int StatusUsuarioId { get; set; }
         public string? NomeStatusUsuario { get; set; }

@@ -24,6 +24,7 @@ builder.Services.AddScoped<IRacaRepository, RacaRepository>();
 builder.Services.AddScoped<IStatusUsuarioRepository, StatusUsuarioRepository>();
 builder.Services.AddScoped<ITipoUsuarioRepository, TipoUsuarioRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<ITipoTelefoneRepository, TipoTelefoneRepository>();
 
 // Services
 
@@ -34,6 +35,7 @@ builder.Services.AddScoped<IRacaService, RacaService>();
 builder.Services.AddScoped<IStatusUsuarioService, StatusUsuarioService>();
 builder.Services.AddScoped<ITipoUsuarioService, TipoUsuarioService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<ITipoTelefoneService, TipoTelefoneService>();
 
 var app = builder.Build();
 
@@ -54,7 +56,7 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Usuario}/{action=Index}")
+    pattern: "{controller=Home}/{action=Index}")
     .WithStaticAssets();
 
 

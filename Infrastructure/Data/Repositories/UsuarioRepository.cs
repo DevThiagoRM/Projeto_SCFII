@@ -58,7 +58,10 @@ namespace Projeto_SCFII.Infrastructure.Data.Repositories
 
         public async Task<Usuario?> GetUsuarioByIdAsync(int id)
         {
-            return await _context.Usuarios.FirstOrDefaultAsync(u => u.Id == id && !u.Deleted);
+            return await _context.Usuarios
+                .Include(u => u.Endereco)
+                .Include(u => u.Telefone)
+                .FirstOrDefaultAsync(u => u.Id == id && !u.Deleted);
         }
 
         public async Task<IEnumerable<Usuario>> GetUsuariosByFiltroAsync(UsuarioFiltro filtro)
@@ -155,7 +158,18 @@ namespace Projeto_SCFII.Infrastructure.Data.Repositories
                         Percentual = (decimal)g.Count() / usuarios.Count * 100
                     })
                     .OrderByDescending(x => x.Quantidade)
+                    .ToList(),
+
+                PorDeficiencia = usuarios
+                    .GroupBy(u => u.PossuiDeficiencia ? "PCD" : "N/PCD")
+                    .Select(g => new ItemDashboardDTO
+                    {
+                        Nome = g.Key,
+                        Quantidade = g.Count(),
+                        Percentual = Math.Round((decimal)g.Count() / usuarios.Count * 100, 1)
+                    })
                     .ToList()
+
             };
 
             return new ResponseDTO<DashboardDTO>(true, "Dados do dashboard obtidos com sucesso", dashboard);

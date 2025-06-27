@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Projeto_SCFII.Infrastructure.Application.Constructors.Services;
+using Projeto_SCFII.Infrastructure.Application.DTO.Endereco;
+using Projeto_SCFII.Infrastructure.Application.DTO.Telefone;
 using Projeto_SCFII.Infrastructure.Application.DTO.Usuario;
 using Projeto_SCFII.Infrastructure.Application.Filters;
 using ProjetoAcoesSustentaveis.Infrastructure.Domain.Entities;
@@ -16,6 +18,7 @@ namespace Projeto_SCFII.Controllers
         private readonly IRacaService _racaService;
         private readonly IStatusUsuarioService _statusUsuarioService;
         private readonly ITipoUsuarioService _tipoUsuarioService;
+        private readonly ITipoTelefoneService _tipoTelefoneService;
 
         public UsuarioController(
             IUsuarioService usuarioService,
@@ -24,7 +27,8 @@ namespace Projeto_SCFII.Controllers
             IGeneroService generoService,
             IRacaService racaService,
             IStatusUsuarioService statusUsuarioService,
-            ITipoUsuarioService tipoUsuarioService)
+            ITipoUsuarioService tipoUsuarioService,
+            ITipoTelefoneService tipoTelefoneService)
         {
             _usuarioService = usuarioService;
             _cargoService = cargoService;
@@ -33,6 +37,7 @@ namespace Projeto_SCFII.Controllers
             _racaService = racaService;
             _statusUsuarioService = statusUsuarioService;
             _tipoUsuarioService = tipoUsuarioService;
+            _tipoTelefoneService = tipoTelefoneService;
         }
 
         public async Task<IActionResult> Index()
@@ -86,6 +91,8 @@ namespace Projeto_SCFII.Controllers
             await PopularDropdownDeRacas();
             await PopularDropdownDeStatusUsuario();
             await PopularDropdownDeTipoUsuario();
+            await PopularDropdownDeTipoUsuario();
+            await PopularDropdownDeTipoTelefone();
             return View();
         }
 
@@ -101,6 +108,7 @@ namespace Projeto_SCFII.Controllers
 
             var dto = new UsuarioUpdateDTO
             {
+                UsuarioId = usuario.Id,
                 Nome = usuario.Nome!,
                 Sobrenome = usuario.Sobrenome!,
                 Email = usuario.Email!,
@@ -108,8 +116,26 @@ namespace Projeto_SCFII.Controllers
                 DepartamentoId = usuario.DepartamentoId,
                 RacaId = usuario.RacaId,
                 GeneroId = usuario.GeneroId,
+                PossuiDeficiencia = usuario.PossuiDeficiencia,
+                CID = usuario.CID,
                 TipoUsuarioId = usuario.TipoUsuarioId,
                 StatusUsuarioId = usuario.StatusUsuarioId,
+                Endereco = usuario.Endereco != null ? new EnderecoDTO
+                {
+                    Logradouro = usuario.Endereco.Logradouro,
+                    Numero = usuario.Endereco.Numero,
+                    Complemento = usuario.Endereco.Complemento,
+                    PontoReferencia = usuario.Endereco.PontoReferencia,
+                    Bairro = usuario.Endereco.Bairro,
+                    Cidade = usuario.Endereco.Cidade,
+                    UF = usuario.Endereco.UF,
+                    CEP = usuario.Endereco.CEP
+                } : null,
+                Telefone = usuario.Telefone != null ? new TelefoneDTO
+                {
+                    NumeroTelefone = usuario.Telefone.NumeroTelefone,
+                    TipoTelefoneId = usuario.Telefone.TipoTelefoneId
+                } : null
             };
 
             ViewBag.Cargos = new SelectList((await _cargoService.GetAllAsync()).Data, "Id", "NomeCargo");
@@ -117,6 +143,7 @@ namespace Projeto_SCFII.Controllers
             ViewBag.Racas = new SelectList((await _racaService.GetAllAsync()).Data, "Id", "NomeRaca");
             ViewBag.Generos = new SelectList((await _generoService.GetAllAsync()).Data, "Id", "NomeGenero");
             ViewBag.TiposUsuario = new SelectList((await _tipoUsuarioService.GetAllAsync()).Data, "Id", "TipoDeUsuario");
+            ViewBag.TiposTelefone = new SelectList((await _tipoTelefoneService.GetAllAsync()).Data, "Id", "TipoDeTelefone");
             ViewBag.StatusUsuarios = new SelectList((await _statusUsuarioService.GetAllAsync()).Data, "Id", "Status");
 
             return View("Update", dto);
@@ -141,8 +168,26 @@ namespace Projeto_SCFII.Controllers
                 DepartamentoId = usuario.DepartamentoId,
                 RacaId = usuario.RacaId,
                 GeneroId = usuario.GeneroId,
+                PossuiDeficiencia = usuario.PossuiDeficiencia,
+                CID = usuario.CID,
                 TipoUsuarioId = usuario.TipoUsuarioId,
                 StatusUsuarioId = usuario.StatusUsuarioId,
+                Endereco = usuario.Endereco != null ? new EnderecoDTO
+                {
+                    Logradouro = usuario.Endereco.Logradouro,
+                    Numero = usuario.Endereco.Numero,
+                    Complemento = usuario.Endereco.Complemento,
+                    PontoReferencia = usuario.Endereco.PontoReferencia,
+                    Bairro = usuario.Endereco.Bairro,
+                    Cidade = usuario.Endereco.Cidade,
+                    UF = usuario.Endereco.UF,
+                    CEP = usuario.Endereco.CEP
+                } : null,
+                Telefone = usuario.Telefone != null ? new TelefoneDTO
+                {
+                    NumeroTelefone = usuario.Telefone.NumeroTelefone,
+                    TipoTelefoneId = usuario.Telefone.TipoTelefoneId
+                } : null
             };
 
             ViewBag.Cargos = new SelectList((await _cargoService.GetAllAsync()).Data, "Id", "NomeCargo", usuario.CargoId);
@@ -150,6 +195,7 @@ namespace Projeto_SCFII.Controllers
             ViewBag.Racas = new SelectList((await _racaService.GetAllAsync()).Data, "Id", "NomeRaca", usuario.RacaId);
             ViewBag.Generos = new SelectList((await _generoService.GetAllAsync()).Data, "Id", "NomeGenero", usuario.GeneroId);
             ViewBag.TiposUsuario = new SelectList((await _tipoUsuarioService.GetAllAsync()).Data, "Id", "TipoDeUsuario", usuario.TipoUsuarioId);
+            ViewBag.TiposTelefone = new SelectList((await _tipoTelefoneService.GetAllAsync()).Data, "Id", "TipoDeTelefone");
             ViewBag.StatusUsuarios = new SelectList((await _statusUsuarioService.GetAllAsync()).Data, "Id", "Status", usuario.StatusUsuarioId);
 
             return View("Details", dto);
@@ -166,7 +212,6 @@ namespace Projeto_SCFII.Controllers
 
             return View(response.Data);
         }
-
 
         private async Task PopularDropdownDeCargos()
         {
@@ -246,6 +291,19 @@ namespace Projeto_SCFII.Controllers
             }
         }
 
+        private async Task PopularDropdownDeTipoTelefone()
+        {
+            var response = await _tipoTelefoneService.GetAllAsync();
+            if (response.Success)
+            {
+                ViewBag.TiposTelefone = new SelectList(response.Data, "Id", "TipoDeTelefone");
+            }
+            else
+            {
+                ViewBag.TiposTelefone = new SelectList(Enumerable.Empty<Cargo>(), "Id", "TipoDeTelefone");
+            }
+        }
+
         [HttpPost("filtro")]
         public async Task<IActionResult> GetByFiltro([FromBody] UsuarioFiltro filtro)
         {
@@ -272,8 +330,8 @@ namespace Projeto_SCFII.Controllers
         }
 
 
-        [HttpPut("{id:int}")]
-        public async Task<IActionResult> Update(int id, [FromBody] UsuarioUpdateDTO usuarioUpdateDto)
+        [HttpPost("update/{id}")]
+        public async Task<IActionResult> Update(int id, UsuarioUpdateDTO usuarioUpdateDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -282,7 +340,9 @@ namespace Projeto_SCFII.Controllers
             if (!response.Success)
                 return BadRequest(response.Message);
 
-            return Ok(response);
+            //return Ok(response);
+
+            return RedirectToAction("Index", "Usuario");
         }
 
         [HttpPost("{id:int}")]

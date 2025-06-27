@@ -6,7 +6,7 @@
 
 <div class="card card-create">
     <div class="card-header text-center">
-        <h2>Cadastrar Novo Usuário</h2>
+        <h3>Cadastrar Novo Usuário</h3>
     </div>
 
     <div class="card-body">
@@ -14,19 +14,19 @@
             <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
             <!-- Dados Pessoais -->
-            <h3 class="mb-3 mt-4 border-bottom pb-2">Dados Pessoais</h3>
+            <h5 class="my-2 border-bottom pb-2">Dados Pessoais</h5>
             <div class="row">
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6">
                     <label asp-for="Nome" class="form-label">Nome</label>
                     <input asp-for="Nome" class="form-control" placeholder="Digite o nome" />
                     <span asp-validation-for="Nome" class="text-danger small"></span>
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6">
                     <label asp-for="Sobrenome" class="form-label">Sobrenome</label>
                     <input asp-for="Sobrenome" class="form-control" placeholder="Digite o sobrenome" />
                     <span asp-validation-for="Sobrenome" class="text-danger small"></span>
                 </div>
-                <div class="col-md-12 mb-3">
+                <div class="col-md-12">
                     <label asp-for="Email" class="form-label">E-mail</label>
                     <input asp-for="Email" class="form-control" placeholder="exemplo@email.com" />
                     <span asp-validation-for="Email" class="text-danger small"></span>
@@ -34,14 +34,14 @@
             </div>
 
             <!-- Credenciais de Acesso -->
-            <h3 class="mb-3 mt-4 border-bottom pb-2">Credenciais de Acesso</h3>
+            <h5 class="my-2 border-bottom pb-2">Credenciais de Acesso</h5>
             <div class="row">
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6">
                     <label asp-for="Senha" class="form-label">Senha</label>
                     <input asp-for="Senha" type="password" class="form-control" autocomplete="new-password" />
                     <span asp-validation-for="Senha" class="text-danger small"></span>
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6">
                     <label asp-for="ConfirmarSenha" class="form-label">Confirmar Senha</label>
                     <input asp-for="ConfirmarSenha" type="password" class="form-control" autocomplete="new-password" />
                     <span asp-validation-for="ConfirmarSenha" class="text-danger small"></span>
@@ -49,44 +49,44 @@
             </div>
 
             <!-- Informações Corporativas -->
-            <h3 class="mb-3 mt-4 border-bottom pb-2">Informações Corporativas</h3>
+            <h5 class="my-2 border-bottom pb-2">Informações Corporativas</h5>
             <div class="row">
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6">
                     <label asp-for="CargoId" class="form-label">Cargo</label>
                     <select asp-for="CargoId" asp-items="ViewBag.Cargos" class="form-control">
                         <option value="">Selecione...</option>
                     </select>
                     <span asp-validation-for="CargoId" class="text-danger small"></span>
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6">
                     <label asp-for="DepartamentoId" class="form-label">Departamento</label>
                     <select asp-for="DepartamentoId" asp-items="ViewBag.Departamentos" class="form-control">
                         <option value="">Selecione...</option>
                     </select>
                     <span asp-validation-for="DepartamentoId" class="text-danger small"></span>
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6">
                     <label asp-for="RacaId" class="form-label">Raça</label>
                     <select asp-for="RacaId" asp-items="ViewBag.Racas" class="form-control">
                         <option value="">Selecione...</option>
                     </select>
                     <span asp-validation-for="RacaId" class="text-danger small"></span>
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6">
                     <label asp-for="GeneroId" class="form-label">Gênero</label>
                     <select asp-for="GeneroId" asp-items="ViewBag.Generos" class="form-control">
                         <option value="">Selecione...</option>
                     </select>
                     <span asp-validation-for="GeneroId" class="text-danger small"></span>
                 </div>
-                <div class="col-md-4 mb-3">
+                <div class="col-md-4">
                     <label asp-for="TipoUsuarioId" class="form-label">Tipo Usuário</label>
                     <select asp-for="TipoUsuarioId" asp-items="ViewBag.TiposUsuario" class="form-control">
                         <option value="">Selecione...</option>
                     </select>
                     <span asp-validation-for="TipoUsuarioId" class="text-danger small"></span>
                 </div>
-                <div class="col-md-4 mb-3">
+                <div class="col-md-4">
                     <label asp-for="StatusUsuarioId" class="form-label">Status</label>
                     <select asp-for="StatusUsuarioId" asp-items="ViewBag.StatusUsuarios" class="form-control">
                         <option value="">Selecione...</option>
@@ -96,15 +96,15 @@
             </div>
 
             <!-- Deficiência -->
-            <h3 class="mb-3 mt-4 border-bottom pb-2">Deficiência (caso possua)</h3>
+            <h5 class="my-2 border-bottom pb-2">Deficiência (caso possua)</h5>
             <div class="row">
-                <div class="col-md-4 mb-3">
-                    <div class="form-check mb-3">
+                <div class="col-md-4">
+                    <div class="form-check">
                         <input asp-for="PossuiDeficiencia" class="form-check-input" type="checkbox" />
                         <label asp-for="PossuiDeficiencia" class="form-check-label">Possui Deficiência</label>
                     </div>
                 </div>
-                <div class="col-md-4 mb-3">
+                <div class="col-md-4">
                     <label asp-for="CID" class="form-label">CID</label>
                     <input asp-for="CID" class="form-control" />
                     <span asp-validation-for="CID" class="text-danger small"></span>
@@ -113,34 +113,34 @@
             </div>
 
             <!-- Endereço -->
-            <h3 class="mb-3 mt-4 border-bottom pb-2">Endereço</h3>
+            <h5 class="my-2 border-bottom pb-2">Endereço</h5>
             <div class="row">
-                <div class="col-md-4 mb-3">
+                <div class="col-md-4">
                     <label asp-for="Endereco.CEP" class="form-label">CEP</label>
                     <input asp-for="Endereco.CEP" class="form-control" />
                     <span asp-validation-for="Endereco.CEP" class="text-danger small"></span>
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6">
                     <label asp-for="Endereco.Logradouro" class="form-label">Logradouro</label>
                     <input asp-for="Endereco.Logradouro" class="form-control" />
                     <span asp-validation-for="Endereco.Logradouro" class="text-danger small"></span>
                 </div>
-                <div class="col-md-2 mb-3">
+                <div class="col-md-2">
                     <label asp-for="Endereco.Numero" class="form-label">Número</label>
                     <input asp-for="Endereco.Numero" class="form-control" />
                     <span asp-validation-for="Endereco.Numero" class="text-danger small"></span>
                 </div>
-                <div class="col-md-4 mb-3">
+                <div class="col-md-4">
                     <label asp-for="Endereco.Bairro" class="form-label">Bairro</label>
                     <input asp-for="Endereco.Bairro" class="form-control" />
                     <span asp-validation-for="Endereco.Bairro" class="text-danger small"></span>
                 </div>
-                <div class="col-md-4 mb-3">
+                <div class="col-md-4">
                     <label asp-for="Endereco.Cidade" class="form-label">Cidade</label>
                     <input asp-for="Endereco.Cidade" class="form-control" />
                     <span asp-validation-for="Endereco.Cidade" class="text-danger small"></span>
                 </div>
-                <div class="col-md-4 mb-3">
+                <div class="col-md-4">
                     <label asp-for="Endereco.UF" class="form-label">UF</label>
                     <input asp-for="Endereco.UF" class="form-control" />
                     <span asp-validation-for="Endereco.UF" class="text-danger small"></span>
@@ -148,16 +148,18 @@
             </div>
 
             <!-- Contato -->
-            <h3 class="mb-3 mt-4 border-bottom pb-2">Contato</h3>
+            <h5 class="mb-1 border-bottom pb-2">Contato</h5>
             <div class="row">
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6">
                     <label asp-for="Telefone.NumeroTelefone" class="form-label">Número</label>
                     <input asp-for="Telefone.NumeroTelefone" class="form-control" />
                     <span asp-validation-for="Telefone.NumeroTelefone" class="text-danger small"></span>
                 </div>
-                <div class="col-md-6 mb-3">
-                    <label asp-for="Telefone.TipoTelefoneId" class="form-label">Tipo</label>
-                    <input asp-for="Telefone.TipoTelefoneId" class="form-control" />
+                <div class="col-md-6">
+                    <label asp-for="Telefone.TipoTelefoneId" class="form-label">Tipo de Telefone</label>
+                    <select asp-for="Telefone.TipoTelefoneId" asp-items="ViewBag.TiposTelefone" class="form-control">
+                        <option value="">Selecione...</option>
+                    </select>
                     <span asp-validation-for="Telefone.TipoTelefoneId" class="text-danger small"></span>
                 </div>
             </div>

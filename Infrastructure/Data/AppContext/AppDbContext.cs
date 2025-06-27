@@ -12,7 +12,6 @@ namespace ProjetoAcoesSustentaveis.Infrastructure.Data.AppContext
         public DbSet<Cargo> Cargos { get; set; }
         public DbSet<Departamento> Departamentos { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
-        public DbSet<TipoEndereco> TiposEndereco { get; set; }
         public DbSet<Telefone> Telefones { get; set; }
         public DbSet<TipoTelefone> TiposTelefone { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
@@ -71,7 +70,7 @@ namespace ProjetoAcoesSustentaveis.Infrastructure.Data.AppContext
                 .HasMaxLength(300);
 
                 entity.HasData(
-                    new Genero { Id = 1, NomeGenero = "Masculino", Descricao = "Homem cisgênero"},
+                    new Genero { Id = 1, NomeGenero = "Masculino", Descricao = "Homem cisgênero" },
                     new Genero { Id = 2, NomeGenero = "Feminino", Descricao = "Mulher cisgênero" },
                     new Genero { Id = 3, NomeGenero = "Não binário", Descricao = "Pessoa que não se identifica dentro do binário homem/mulher" },
                     new Genero { Id = 4, NomeGenero = "Transgênero Homem", Descricao = "Pessoa trans identificada como homem" },
@@ -116,110 +115,36 @@ namespace ProjetoAcoesSustentaveis.Infrastructure.Data.AppContext
                 );
             });
 
-            modelBuilder.Entity<Telefone>()
-                .HasOne(t => t.Usuario)
-                .WithOne(u => u.Telefone)
-                .HasForeignKey<Telefone>(t => t.UsuarioId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-
-            modelBuilder.Entity<TipoEndereco>(entity =>
-            {
-                entity.ToTable("TipoEndereco");
-                entity.HasKey(c => c.Id);
-                entity.Property(c => c.TipoDeEndereco)
-                .IsRequired()
-                .HasMaxLength(50);
-
-                entity.HasData(
-                    new TipoEndereco { Id = 1, TipoDeEndereco = "Residencial" },
-                    new TipoEndereco { Id = 2, TipoDeEndereco = "Comercial" },
-                    new TipoEndereco { Id = 3, TipoDeEndereco = "Cobrança" }
-                );
-            });
-
             modelBuilder.Entity<TipoUsuario>(entity =>
             {
-                entity.ToTable("TipoUsuario");
-                entity.HasKey(c => c.Id);
-                entity.Property(c => c.TipoDeUsuario)
-                .IsRequired()
-                .HasMaxLength(50);
-
                 entity.HasData(
                     new TipoUsuario { Id = 1, TipoDeUsuario = "Administrador" },
-                    new TipoUsuario { Id = 2, TipoDeUsuario = "Gerente" },
-                    new TipoUsuario { Id = 3, TipoDeUsuario = "Usuário Comum" }
+                    new TipoUsuario { Id = 2, TipoDeUsuario = "Gerência" },
+                    new TipoUsuario { Id = 3, TipoDeUsuario = "Usuario Comum" }
                 );
             });
 
-            modelBuilder.Entity<Usuario>(entity =>
+            modelBuilder.Entity<Telefone>()
+                        .HasOne(t => t.TipoTelefone)
+                        .WithMany(tt => tt.Telefones)
+                        .HasForeignKey(t => t.TipoTelefoneId);
+
+
+            modelBuilder.Entity<TipoTelefone>(entity =>
             {
-                entity.ToTable("Usuarios");
-                entity.HasKey(c => c.Id);
+                entity.ToTable("TiposTelefone");
 
-                entity.Property(c => c.Nome)
-                      .IsRequired()
-                      .HasMaxLength(50);
+                entity.HasKey(t => t.Id);
 
-                entity.Property(c => c.Sobrenome)
-                      .IsRequired()
-                      .HasMaxLength(50);
+                entity.Property(t => t.TipoDeTelefone)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
-                entity.Ignore(c => c.NomeCompleto);
-
-                entity.Property(c => c.Email)
-                      .IsRequired()
-                      .HasMaxLength(100);
-
-                entity.HasIndex(u => u.Email).IsUnique();
-
-
-                entity.Property(c => c.Senha)
-                      .IsRequired()
-                      .HasMaxLength(100);
-
-                entity.Property(c => c.DataCriacao)
-                      .IsRequired();
-
-                entity.Property(c => c.Deleted)
-                      .IsRequired();
-
-                // Relacionamentos FK
-                entity.HasOne(u => u.Cargo)
-                      .WithMany(c => c.Usuarios)
-                      .HasForeignKey(u => u.CargoId)
-                      .OnDelete(DeleteBehavior.Restrict);
-
-
-                entity.HasOne(u => u.Departamento)
-                      .WithMany(d => d.Usuarios)
-                      .HasForeignKey(u => u.DepartamentoId)
-                      .OnDelete(DeleteBehavior.Restrict);
-
-                entity.HasOne(u => u.Raca)
-                      .WithMany(r => r.Usuarios)
-                      .HasForeignKey(u => u.RacaId)
-                      .OnDelete(DeleteBehavior.Restrict);
-
-                entity.HasOne(u => u.Genero)
-                      .WithMany(g => g.Usuarios)
-                      .HasForeignKey(u => u.GeneroId)
-                      .OnDelete(DeleteBehavior.Restrict);
-
-                entity.HasOne(u => u.StatusUsuario)
-                      .WithMany(s => s.Usuarios)
-                      .HasForeignKey(u => u.StatusUsuarioId)
-                      .OnDelete(DeleteBehavior.Restrict);
-
-                entity.HasOne(u => u.TipoUsuario)
-                      .WithMany(t => t.Usuarios)
-                      .HasForeignKey(u => u.TipoUsuarioId)
-                      .OnDelete(DeleteBehavior.Restrict);
+                entity.HasData(
+                    new TipoTelefone { Id = 1, TipoDeTelefone = "Telefone Fixo" },
+                    new TipoTelefone { Id = 2, TipoDeTelefone = "Celular" }
+                );
             });
-            base.OnModelCreating(modelBuilder);
-
         }
-
     }
 }
